@@ -3,7 +3,7 @@ import { email_manager } from "./email_manager";
 export class form_manager {
 
     //Funzione che invia Form per la disponibilità ai docenti dei cds
-    shareFormAvailability(Id: string) {
+    static shareFormAvailability(Id: string) {
 
         //id del Form da inviare
         let formId: string = Id;
@@ -11,6 +11,13 @@ export class form_manager {
         //Recupero il link pubblico per la condivisione del Form
         let form = FormApp.openById(formId);
         let formUrl: string = form.getPublishedUrl();
+
+        //Elimino tutte le risposte all'interno del form
+        form.deleteAllResponses();
+        
+        //Collego il form allo spreadsheet corrente per memorizzare le risposte
+        let spreadSheetId = SpreadsheetApp.getActiveSpreadsheet().getId();
+        form.setDestination(FormApp.DestinationType.SPREADSHEET, spreadSheetId);
 
         //Imposto l'email da iviare
         let object: string = "Form Disponibilità";

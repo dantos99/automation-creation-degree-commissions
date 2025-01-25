@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons.css">
+  <script>
+    const DEVELOPER_KEY = 'AIzaSyBQpUfnvDAxI0vbfjaUFTIxfytzsKk7nhw';
+    const DIALOG_DIMENSIONS = { width: 900, height: 500 };
+    let pickerApiLoaded = false;
+
+    /**
+     * Loads the Google Picker API.
+     */
+    function onApiLoad() {
+      gapi.load('picker', {
+        'callback': function () {
+          pickerApiLoaded = true;
+        }
+      });
+    }
+
+    function getOAuthToken() {
+      google.script.run.withSuccessHandler(createPicker)
+        .withFailureHandler(showError).getOAuthToken();
+    }
+
+    function createPicker(token) {
+      if (pickerApiLoaded && token) {
+        let DocsUploadView = new google.picker.DocsUploadView();
+        DocsUploadView.setIncludeFolders(true);
+
+        let DocsView = new google.picker.DocsView();
+        DocsView.setSelectFolderEnabled(true);
+        DocsView.setIncludeFolders(true);
+        DocsView.setParent("root");
+        let picker = new google.picker.PickerBuilder()
+          .addView(google.picker.ViewId.FORMS)
+          .setOAuthToken(token)
+          .setDeveloperKey(DEVELOPER_KEY)
+          .setCallback(pickerCallback)
+          .setOrigin(google.script.host.origin)
+          .setSize(DIALOG_DIMENSIONS.width - 10,
+            DIALOG_DIMENSIONS.height - 10)
+          .build();
+        picker.setVisible(true);
+      } else {
+        showError('Unable to load the file');
+      }
+    }
+
+    function pickerCallback(data) {
+      let action = data[google.picker.Response.ACTION];
+      if (action == google.picker.Action.PICKED) {
+        let form = data[google.picker.Response.DOCUMENTS][0];
+        let formId = form.id
+        google.script.run.withSuccessHandler(function () {
+          google.script.host.close();
+        }).nextStep(formId);
+        
+      } else if (action == google.picker.Action.CANCEL) {
+        google.script.host.close();
+      }
+    }
+
+    function showError(message) {
+      document.getElementById('result').innerHTML = 'Error: ' + message;
+    }
+  </script>
+</head>
+
+<body>
+  <div>
+    <p id='result'></p>
+  </div>
+  <script src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>
+  <script>
+    window.onload = function () {
+      getOAuthToken();
+    }
+  </script>
+</body>
+
+</html>

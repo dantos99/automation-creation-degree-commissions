@@ -3,11 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.email_manager = void 0;
 var email_manager = /** @class */ (function () {
     function email_manager() {
+        //SpreadSheet Attivo
+        this.spreadSheet = SpreadsheetApp.getActiveSpreadsheet();
+        this.listTeacherSheetName = "elenco_docenti";
     }
     //Funzione che restituisce le email dei relatori
     email_manager.prototype.findSupervisorEmail = function () {
         //Foglio Lauree
-        var sheet = email_manager.spreadSheet.getActiveSheet();
+        var sheet = new email_manager().spreadSheet.getActiveSheet();
         //Creo un array con il contenuto della prima riga
         var valuesSheet = sheet.getDataRange().getValues();
         var headers = valuesSheet[0];
@@ -27,7 +30,7 @@ var email_manager = /** @class */ (function () {
     //Funzione che restituisce le email dei prof dei tre cds
     email_manager.prototype.findAllTeachersEmail = function () {
         //Foglio Lauree
-        var sheet = email_manager.spreadSheet.getActiveSheet();
+        var sheet = new email_manager().spreadSheet.getActiveSheet();
         //Creo un array con il contenuto della prima riga
         var valuesSheet = sheet.getDataRange().getValues();
         var headers = valuesSheet[0];
@@ -70,9 +73,6 @@ var email_manager = /** @class */ (function () {
         });
         return array1D;
     };
-    //SpreadSheet Attivo
-    email_manager.spreadSheet = SpreadsheetApp.getActiveSpreadsheet();
-    email_manager.listTeacherSheetName = "elenco_docenti";
     return email_manager;
 }());
 exports.email_manager = email_manager;

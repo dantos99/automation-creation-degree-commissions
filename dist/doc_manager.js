@@ -1,11 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.doc_manager = void 0;
 var email_manager_1 = require("./email_manager");
 var doc_manager = /** @class */ (function () {
     function doc_manager() {
     }
     //Funzione che condivide un Google doc con i relatori
-    doc_manager.prototype.shareDocToSupervisor = function (Id) {
+    doc_manager.shareDocToSupervisor = function (Id) {
         //id del Google doc già fatto da inviare
         var docId = Id;
         //Recupero il file da Google Drive
@@ -20,3 +21,4 @@ var doc_manager = /** @class */ (function () {
     };
     return doc_manager;
 }());
+exports.doc_manager = doc_manager;

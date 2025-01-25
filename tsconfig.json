@@ -5,7 +5,7 @@
       "outDir": "./dist", // La directory in cui verranno generati i file JavaScript compilati
       "rootDir": "./src", // La directory radice dei tuoi file TypeScript
       "strict": true, // Attiva controlli di tipo rigorosi
-      "lib": ["ES2017"],
+      "lib": ["ES2016"],
       "esModuleInterop": true, // Migliora l'interoperabilità con i moduli CommonJS
       "skipLibCheck": true, // Disabilita i controlli di tipo sulle dichiarazioni di libreria
       "forceConsistentCasingInFileNames": true, // Forza l'uso di maiuscole e minuscole coerenti nei nomi dei file

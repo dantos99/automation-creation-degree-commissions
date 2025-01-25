@@ -1,64 +1,55 @@
 export class menu {
 
-    protected ui = SpreadsheetApp.getUi();
+    static playMenu() {
 
-    static playMenu(): void{
-
-        let check = false;
-        let docId: string = new menu().requestDoc();
-        let formId: string = new menu().requestForm();
-        let graduationThreshold: string = new menu().requestGraduation();
-
-        //Controllo dei parametri
-        try {
-            while (check == false) {
-
-                if (DriveApp.getFileById(docId)) {
-
-                    if (DriveApp.getFileById(formId)) {
-                        if (Number.parseInt(graduationThreshold)) {
-                            check = true;
-                        } else {
-                            Logger.log("Errore: " + graduationThreshold + " non è un numero");
-                        }
-                    } else {
-                        Logger.log("Errore: Form non trovato");
-                        formId = new menu().requestForm();
-                    }
-                } else {
-                    Logger.log("Errore: Doc non trovato");
-                    docId = new menu().requestDoc();
-                }
-            }
-
-        } catch (e) {
-            Logger.log("Errore")
-        }
+        let menuIstance = new menu();
+        menuIstance.showPickerDocs();
     }
 
-    //Richiesta id documento
-    protected requestDoc(): string {
+    private showPickerDocs() {
 
-        let request1: string = "Inserire l'id del Google Doc da condividere con i relatori";
-        let response = new menu().ui.prompt(request1);
-        let docId = response.getResponseText();
-        return docId;
+        let html = HtmlService.createHtmlOutputFromFile('html/docs.html').setWidth(900).setHeight(500).setSandboxMode(HtmlService.SandboxMode.IFRAME);
+        SpreadsheetApp.getUi().showModalDialog(html, 'Seleziona un Documento');
+    }
+
+    static showPickerForm() {
+
+        let html = HtmlService.createHtmlOutputFromFile('html/forms.html').setWidth(900).setHeight(500).setSandboxMode(HtmlService.SandboxMode.IFRAME);
+        SpreadsheetApp.getUi().showModalDialog(html, 'Seleziona un Form');
     }
 
     //Richiesta numero di laureandi oltre il quale creare più commissioni
-    protected requestGraduation(): string {
+    static requestGraduation(): string {
 
         let request3: string = "Inserire la soglia minima dei laureandi oltre la quale creare più di una commisione";
-        let response = new menu().ui.prompt(request3);
+        let response = SpreadsheetApp.getUi().prompt(request3);
         let graduationThreshold = response.getResponseText();
+
+        //Controllo parametro
+        if (Number.isNaN(Number.parseInt(graduationThreshold))) {
+            SpreadsheetApp.getUi().alert("Inserire un numero intero");
+            menu.requestGraduation();
+        }
+
         return graduationThreshold;
     }
-    //Richiesta id form
-    protected requestForm(): string {
 
-        let request2: string = "Inserire l'id del form per la richiesta di disponibilità";
-        let response = new menu().ui.prompt(request2);
-        let formId = response.getResponseText();
-        return formId;
+}
+
+function getOAuthToken() {
+    DriveApp.getRootFolder();
+    return ScriptApp.getOAuthToken();
+}
+
+function nextStep(data: string) {
+    if ((PropertiesService.getScriptProperties().getProperty("step")) == null) {
+        PropertiesService.getScriptProperties().setProperty("docId", data);
+        PropertiesService.getScriptProperties().setProperty("step", "docId");
+    } else if ((PropertiesService.getScriptProperties().getProperty("step")) == "docId") {
+        PropertiesService.getScriptProperties().setProperty("step", "formId");
+        menu.showPickerForm();
+    } else if ((PropertiesService.getScriptProperties().getProperty("step")) == "formId") {
+        PropertiesService.getScriptProperties().setProperty("form", data);
+        menu.requestGraduation();
     }
 }

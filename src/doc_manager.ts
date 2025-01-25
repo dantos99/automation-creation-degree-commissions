@@ -3,7 +3,7 @@ import { email_manager } from "./email_manager";
 export class doc_manager {
     
     //Funzione che condivide un Google doc con i relatori
-    shareDocToSupervisor(Id: string) {
+    static shareDocToSupervisor(Id: string) {
 
         //id del Google doc già fatto da inviare
         let docId: string = Id;
