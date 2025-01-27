@@ -8,9 +8,6 @@
     const DIALOG_DIMENSIONS = { width: 900, height: 500 };
     let pickerApiLoaded = false;
 
-    /**
-     * Loads the Google Picker API.
-     */
     function onApiLoad() {
       gapi.load('picker', {
         'callback': function () {
@@ -34,7 +31,7 @@
         DocsView.setIncludeFolders(true);
         DocsView.setParent("root");
         let picker = new google.picker.PickerBuilder()
-          .addView(google.picker.ViewId.FORMS)
+          .addView(google.picker.ViewId.DOCUMENTS)
           .setOAuthToken(token)
           .setDeveloperKey(DEVELOPER_KEY)
           .setCallback(pickerCallback)
@@ -51,12 +48,12 @@
     function pickerCallback(data) {
       let action = data[google.picker.Response.ACTION];
       if (action == google.picker.Action.PICKED) {
-        let form = data[google.picker.Response.DOCUMENTS][0];
-        let formId = form.id
+        let doc = data[google.picker.Response.DOCUMENTS][0];
+        let docId = doc.id
         google.script.run.withSuccessHandler(function () {
           google.script.host.close();
-        }).nextStep(formId);
-        
+        }).nextStep(docId);
+        google.scrip.run.withSuccessHandler().showPickerForm();
       } else if (action == google.picker.Action.CANCEL) {
         google.script.host.close();
       }

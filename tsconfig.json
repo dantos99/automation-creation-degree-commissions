@@ -1,18 +1,12 @@
 {
-    "compilerOptions": {
-      "target": "es5", // Compila il codice in JavaScript ES5 (compatibile con la maggior parte dei browser)
-      "module": "commonjs", // Utilizza il modulo CommonJS, adatto per Node.js e molti altri ambienti
-      "outDir": "./dist", // La directory in cui verranno generati i file JavaScript compilati
-      "rootDir": "./src", // La directory radice dei tuoi file TypeScript
-      "strict": true, // Attiva controlli di tipo rigorosi
-      "lib": ["ES2016"],
-      "esModuleInterop": true, // Migliora l'interoperabilità con i moduli CommonJS
-      "skipLibCheck": true, // Disabilita i controlli di tipo sulle dichiarazioni di libreria
-      "forceConsistentCasingInFileNames": true, // Forza l'uso di maiuscole e minuscole coerenti nei nomi dei file
-      "baseUrl": "./", // Base URL per risolvere i moduli
-      "paths": {
-        "@/*": ["src/*"] // Mappa gli alias per le importazioni (es. import { MyClass } from '@models/MyClass')
-      }
-    },
-    "include": ["src/*.ts"] // Include tutti i file TypeScript nella cartella src
-  }
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "none",
+    "lib": ["ES2016"],
+    "outDir": "dist",
+    "noImplicitAny": true
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
+}

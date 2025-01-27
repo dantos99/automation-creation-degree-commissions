@@ -1,7 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.doc_manager = void 0;
-var email_manager_1 = require("./email_manager");
 var doc_manager = /** @class */ (function () {
     function doc_manager() {
     }
@@ -12,7 +8,7 @@ var doc_manager = /** @class */ (function () {
         //Recupero il file da Google Drive
         var docToDoList = DriveApp.getFileById(docId);
         //Recupero le email dei relatori 
-        var emailRelatori = email_manager_1.email_manager.getAllTeachersEmail();
+        var emailRelatori = email_manager.getSupervisorEmail();
         var i = 0;
         //Condivido il documento
         for (i = 0; i < emailRelatori.length; i++) {
@@ -21,4 +17,3 @@ var doc_manager = /** @class */ (function () {
     };
     return doc_manager;
 }());
-exports.doc_manager = doc_manager;

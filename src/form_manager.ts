@@ -1,6 +1,4 @@
-import { email_manager } from "./email_manager";
-
-export class form_manager {
+class form_manager {
 
     //Funzione che invia Form per la disponibilità ai docenti dei cds
     static shareFormAvailability(Id: string) {

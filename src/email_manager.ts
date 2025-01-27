@@ -1,14 +1,15 @@
-export class email_manager {
+class email_manager {
 
     //SpreadSheet Attivo
     protected spreadSheet = SpreadsheetApp.getActiveSpreadsheet();
-    protected listTeacherSheetName = "elenco_docenti";
-
+    //Nome sheet principale
+    protected sheetMain: string = "Foglio1";
+    
     //Funzione che restituisce le email dei relatori
     private findSupervisorEmail(): Array<string> {
 
         //Foglio Lauree
-        let sheet = new email_manager().spreadSheet.getActiveSheet();
+        let sheet = this.spreadSheet.getSheetByName(this.sheetMain);
 
         //Creo un array con il contenuto della prima riga
         let valuesSheet: Array<Array<string>> = sheet.getDataRange().getValues();
@@ -23,7 +24,8 @@ export class email_manager {
         }
 
         //Creo un array con le email dei relatori
-        let emailValue = sheet.getRange(2, indexColumnEmail + 1, sheet.getLastRow() - 1, 1).getValues();
+        let emailValue = sheet.getRange(2, indexColumnEmail + 1, sheet.getLastRow(), 1).getValues();
+        emailValue = sheet.getRange(2, indexColumnEmail + 1, emailValue.filter(String).length, 1).getValues();
 
         let email: Array<string> = this.map2Dto1D(emailValue);
 
@@ -36,13 +38,13 @@ export class email_manager {
     //Funzione che restituisce le email dei prof dei tre cds
     private findAllTeachersEmail(): Array<string> {
         //Foglio Lauree
-        let sheet = new email_manager().spreadSheet.getActiveSheet();
+        let sheet = this.spreadSheet.getSheetByName(this.sheetMain);
 
         //Creo un array con il contenuto della prima riga
         let valuesSheet: Array<Array<string>> = sheet.getDataRange().getValues();
         let headers: Array<string> = valuesSheet[0];
 
-        let columnCDS: string = "GRUPPO_ESSE3";
+        let columnCDS: string = "CORSO";
 
         //Cerco l'indice della colonna contenente i corsi di studio
         let indexcolumnCDS: number = headers.indexOf(columnCDS);
@@ -52,7 +54,7 @@ export class email_manager {
         }
 
         //Creo un array con i corsi di studio
-        let cdsValue = sheet.getRange(2, indexcolumnCDS + 1, sheet.getLastRow() - 1, 1).getValues();
+        let cdsValue = sheet.getRange(2, indexcolumnCDS + 1, sheet.getLastRow(), 1).getValues();
 
         let cds: Array<string> = this.map2Dto1D(cdsValue);
 
@@ -60,17 +62,26 @@ export class email_manager {
         cds = Array.from(new Set(cds));
 
         //Foglio Elenco Docenti
-        let sheetTeachers = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(columnCDS);
-
+        let sheetName: string = "elenco docenti";
+        let sheetTeachers = new email_manager().spreadSheet.getSheetByName(sheetName);
         let valuesSheetTeachers = sheetTeachers?.getDataRange().getValues();
+
+        //Cerco la colonna contente i cds
+        headers = valuesSheetTeachers[0];
+        indexcolumnCDS = headers.indexOf(columnCDS);
+        if (indexcolumnCDS === -1) {
+            throw new Error("Colonna '" + columnCDS + "' non trovata.");
+        }
+        valuesSheetTeachers = Array.from(new Set(valuesSheetTeachers));
         let email: Array<string> = [];
 
         //Riempio l'array con le email dei docenti che appartengono ai cds di interesse 
         valuesSheetTeachers?.forEach(function (row) {
-            if (cds.includes(row[2])) {
+            if (cds.includes(row[3])) {
                 email.push(row[0]);
             }
         });
+        email = email.filter(value => value !== "");
         return email;
     }
 
@@ -80,6 +91,7 @@ export class email_manager {
         return email.findSupervisorEmail();
     }
 
+    //Funzione per recuperare le email di tutti i docenti dei cds presenti
     static getAllTeachersEmail(): Array<string> {
         let email = new email_manager();
         return email.findAllTeachersEmail();

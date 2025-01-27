@@ -1,7 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.form_manager = void 0;
-var email_manager_1 = require("./email_manager");
 var form_manager = /** @class */ (function () {
     function form_manager() {
     }
@@ -21,7 +17,7 @@ var form_manager = /** @class */ (function () {
         var object = "Form Disponibilità";
         var messageText = formUrl; //Da aggiungere frasi cordiali (es. Buongiorno..ecc)
         //Recupero le email dei relatori
-        var emailTeachers = email_manager_1.email_manager.getAllTeachersEmail();
+        var emailTeachers = email_manager.getAllTeachersEmail();
         var i = 0;
         //Invio il form ai docenti dei cds
         for (i = 0; i < emailTeachers.length; i++) {
@@ -30,4 +26,3 @@ var form_manager = /** @class */ (function () {
     };
     return form_manager;
 }());
-exports.form_manager = form_manager;
