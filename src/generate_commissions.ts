@@ -9,7 +9,7 @@ class generate_commissions {
         let properties = PropertiesService.getScriptProperties();
         if ((properties.getProperty("docId")) != null && (properties.getProperty("formId")) != null) {
             let html = HtmlService.createHtmlOutputFromFile('html/setting.html').setWidth(900).setHeight(500).setSandboxMode(HtmlService.SandboxMode.IFRAME);
-            SpreadsheetApp.getUi().showModalDialog(html, "");
+            SpreadsheetApp.getUi().showModalDialog(html, " ");
         } else {
             generate_commissions.requestGraduation();
         }
@@ -19,14 +19,14 @@ class generate_commissions {
     //Mostra i documenti presenti in drive
     private showPickerDocs() {
         PropertiesService.getScriptProperties().setProperty("step", "docId");
-        let html = HtmlService.createHtmlOutputFromFile('html/docs.html').setWidth(900).setHeight(500).setSandboxMode(HtmlService.SandboxMode.IFRAME);
+        let html = HtmlService.createHtmlOutputFromFile('html/docs').setWidth(900).setHeight(500).setSandboxMode(HtmlService.SandboxMode.IFRAME);
         SpreadsheetApp.getUi().showModalDialog(html, 'Seleziona il Documento da condividere con i relatori');
     }
 
     //Mostra i forms presenti in drive
     static showPickerForm(id: string) {
         PropertiesService.getScriptProperties().setProperty("step", "formId");
-        let html = HtmlService.createHtmlOutputFromFile('html/forms.html').setWidth(900).setHeight(500).setSandboxMode(HtmlService.SandboxMode.IFRAME);
+        let html = HtmlService.createHtmlOutputFromFile('html/forms').setWidth(900).setHeight(500).setSandboxMode(HtmlService.SandboxMode.IFRAME);
         SpreadsheetApp.getUi().showModalDialog(html, 'Seleziona il Form per la richiesta di disponibilità');
     }
 

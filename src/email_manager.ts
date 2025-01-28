@@ -4,7 +4,7 @@ class email_manager {
     protected spreadSheet = SpreadsheetApp.getActiveSpreadsheet();
     //Nome sheet principale
     protected sheetMain: string = "Foglio1";
-    
+
     //Funzione che restituisce le email dei relatori
     private findSupervisorEmail(): Array<string> {
 
@@ -24,7 +24,7 @@ class email_manager {
         }
 
         //Creo un array con le email dei relatori
-        let emailValue = sheet.getRange(2, indexColumnEmail + 1, sheet.getLastRow(), 1).getValues();
+        let emailValue = sheet.getRange(2, indexColumnEmail + 1, sheet.getLastRow() - 1, 1).getValues();
         emailValue = sheet.getRange(2, indexColumnEmail + 1, emailValue.filter(String).length, 1).getValues();
 
         let email: Array<string> = this.map2Dto1D(emailValue);
@@ -54,7 +54,7 @@ class email_manager {
         }
 
         //Creo un array con i corsi di studio
-        let cdsValue = sheet.getRange(2, indexcolumnCDS + 1, sheet.getLastRow(), 1).getValues();
+        let cdsValue = sheet.getRange(2, indexcolumnCDS + 1, sheet.getLastRow() - 1, 1).getValues();
 
         let cds: Array<string> = this.map2Dto1D(cdsValue);
 
@@ -72,13 +72,22 @@ class email_manager {
         if (indexcolumnCDS === -1) {
             throw new Error("Colonna '" + columnCDS + "' non trovata.");
         }
+
+        //Cerco la colonna contenente le email
+        let indexEmailTeachers = headers.indexOf("EMAIL");
+        if (indexcolumnCDS === -1) {
+            throw new Error("Colonna '" + columnCDS + "' non trovata.");
+        }
+
+        //Elimino i duplicati
         valuesSheetTeachers = Array.from(new Set(valuesSheetTeachers));
+
         let email: Array<string> = [];
 
         //Riempio l'array con le email dei docenti che appartengono ai cds di interesse 
         valuesSheetTeachers?.forEach(function (row) {
-            if (cds.includes(row[3])) {
-                email.push(row[0]);
+            if (cds.includes(row[indexcolumnCDS])) {
+                email.push(row[indexEmailTeachers]);
             }
         });
         email = email.filter(value => value !== "");

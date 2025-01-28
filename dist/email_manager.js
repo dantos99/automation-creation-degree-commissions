@@ -19,7 +19,7 @@ var email_manager = /** @class */ (function () {
             throw new Error("Colonna '" + columnEmail + "' non trovata.");
         }
         //Creo un array con le email dei relatori
-        var emailValue = sheet.getRange(2, indexColumnEmail + 1, sheet.getLastRow(), 1).getValues();
+        var emailValue = sheet.getRange(2, indexColumnEmail + 1, sheet.getLastRow() - 1, 1).getValues();
         emailValue = sheet.getRange(2, indexColumnEmail + 1, emailValue.filter(String).length, 1).getValues();
         var email = this.map2Dto1D(emailValue);
         //Elimino i duplicati
@@ -40,7 +40,7 @@ var email_manager = /** @class */ (function () {
             throw new Error("Colonna '" + columnCDS + "' non trovata.");
         }
         //Creo un array con i corsi di studio
-        var cdsValue = sheet.getRange(2, indexcolumnCDS + 1, sheet.getLastRow(), 1).getValues();
+        var cdsValue = sheet.getRange(2, indexcolumnCDS + 1, sheet.getLastRow() - 1, 1).getValues();
         var cds = this.map2Dto1D(cdsValue);
         //Elimino i duplicati
         cds = Array.from(new Set(cds));
@@ -54,12 +54,18 @@ var email_manager = /** @class */ (function () {
         if (indexcolumnCDS === -1) {
             throw new Error("Colonna '" + columnCDS + "' non trovata.");
         }
+        //Cerco la colonna contenente le email
+        var indexEmailTeachers = headers.indexOf("EMAIL");
+        if (indexcolumnCDS === -1) {
+            throw new Error("Colonna '" + columnCDS + "' non trovata.");
+        }
+        //Elimino i duplicati
         valuesSheetTeachers = Array.from(new Set(valuesSheetTeachers));
         var email = [];
         //Riempio l'array con le email dei docenti che appartengono ai cds di interesse 
         valuesSheetTeachers === null || valuesSheetTeachers === void 0 ? void 0 : valuesSheetTeachers.forEach(function (row) {
-            if (cds.includes(row[3])) {
-                email.push(row[0]);
+            if (cds.includes(row[indexcolumnCDS])) {
+                email.push(row[indexEmailTeachers]);
             }
         });
         email = email.filter(function (value) { return value !== ""; });

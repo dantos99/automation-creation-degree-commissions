@@ -8,7 +8,7 @@ var generate_commissions = /** @class */ (function () {
         var properties = PropertiesService.getScriptProperties();
         if ((properties.getProperty("docId")) != null && (properties.getProperty("formId")) != null) {
             var html = HtmlService.createHtmlOutputFromFile('html/setting.html').setWidth(900).setHeight(500).setSandboxMode(HtmlService.SandboxMode.IFRAME);
-            SpreadsheetApp.getUi().showModalDialog(html, "");
+            SpreadsheetApp.getUi().showModalDialog(html, " ");
         }
         else {
             generate_commissions.requestGraduation();
@@ -17,13 +17,13 @@ var generate_commissions = /** @class */ (function () {
     //Mostra i documenti presenti in drive
     generate_commissions.prototype.showPickerDocs = function () {
         PropertiesService.getScriptProperties().setProperty("step", "docId");
-        var html = HtmlService.createHtmlOutputFromFile('html/docs.html').setWidth(900).setHeight(500).setSandboxMode(HtmlService.SandboxMode.IFRAME);
+        var html = HtmlService.createHtmlOutputFromFile('html/docs').setWidth(900).setHeight(500).setSandboxMode(HtmlService.SandboxMode.IFRAME);
         SpreadsheetApp.getUi().showModalDialog(html, 'Seleziona il Documento da condividere con i relatori');
     };
     //Mostra i forms presenti in drive
     generate_commissions.showPickerForm = function (id) {
         PropertiesService.getScriptProperties().setProperty("step", "formId");
-        var html = HtmlService.createHtmlOutputFromFile('html/forms.html').setWidth(900).setHeight(500).setSandboxMode(HtmlService.SandboxMode.IFRAME);
+        var html = HtmlService.createHtmlOutputFromFile('html/forms').setWidth(900).setHeight(500).setSandboxMode(HtmlService.SandboxMode.IFRAME);
         SpreadsheetApp.getUi().showModalDialog(html, 'Seleziona il Form per la richiesta di disponibilità');
     };
     //Richiesta numero di laureandi oltre il quale creare più commissioni

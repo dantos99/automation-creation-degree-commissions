@@ -12,7 +12,7 @@ class form_manager {
 
         //Elimino tutte le risposte all'interno del form
         form.deleteAllResponses();
-        
+
         //Collego il form allo spreadsheet corrente per memorizzare le risposte
         let spreadSheetId = SpreadsheetApp.getActiveSpreadsheet().getId();
         form.setDestination(FormApp.DestinationType.SPREADSHEET, spreadSheetId);
@@ -29,5 +29,52 @@ class form_manager {
         for (i = 0; i < emailTeachers.length; i++) {
             MailApp.sendEmail(emailTeachers[i], object, messageText);
         }
+    }
+    
+    //Funzione che seleziona tutti i docenti che hanno risposto positivamente(che hanno dato disponibilità) al form
+    static selectResponse() {
+        
+        //Foglio che contiene le risposte
+        let sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Risposte al modulo 1");
+        
+        //Valori inseriti nelle risposte
+        let value = sheet.getDataRange().getValues();
+        
+        let headers = value[0];
+        let columnAvailable: string = "Disponibilità";
+        
+        //Array che conterrà le risposte
+        let responses: Array<response> = [];
+
+        //Trovo gli indici di tutti i campi che mi interessano
+        let indexColumnAvailable: number = headers.indexOf(columnAvailable);
+        if (indexColumnAvailable === -1) {
+            throw new Error("Colonna '" + columnAvailable + "' non trovata.");
+        }
+        let indexColumnName: number = headers.indexOf("Nome");
+        if (indexColumnName === -1) {
+            throw new Error("Colonna 'Nome' non trovata.");
+        }
+        let indexColumnSurname: number = headers.indexOf("Cognome");
+        if (indexColumnSurname === -1) {
+            throw new Error("Colonna 'Cognome' non trovata.");
+        }
+        let indexColumnStartTime: number = headers.indexOf("Disponibile dalle ore");
+        if (indexColumnStartTime === -1) {
+            throw new Error("Colonna 'Disponibile dalle ore' non trovata.");
+        }
+        let indexColumnEndTime: number = headers.indexOf("Disponibile fino alle ore");
+        if (indexColumnEndTime === -1) {
+            throw new Error("Colonna 'Disponibile fino alle ore' non trovata.");
+        }
+
+        value.forEach(function (row) {
+            if ((row[indexColumnAvailable]) == "Disponibile") {
+                responses.push(new response(row[indexColumnName], row[indexColumnSurname], row[indexColumnAvailable], " ", " "));
+            } else if ((row[indexColumnAvailable]) == "Disponibile, ma solo in alcune fasce orarie") {
+                responses.push(new response(row[indexColumnName], row[indexColumnSurname], row[indexColumnAvailable], row[indexColumnStartTime], row[indexColumnEndTime]));
+            }
+        });
+        return responses;
     }
 }

@@ -2,20 +2,24 @@
 <html>
 
 <head>
-    <script>
-        function changeSetting(){
-            google.scrip.run.changeSetting();
-        }
-        function dontChange(){
-            google.scrip.run.shareFile();
-        }
-    </script>
+
 </head>
+
 <body>
   <div>
-    <h1>Desire cambiare i file impostati in precedenza?</h1>
-    <button onclick="changeSetting()">Si</button>
-    <button onclick="dontChange()">No</button> 
+    <h1>Vuoi cambiare i file impostati in precedenza?</h1>
+    <button onclick="change()">Si</button>
+    <button onclick="dontChange();">No</button>
+    <script>
+      function change() {
+        google.script.host.close();
+        google.script.run.changeSetting();
+      }
+      function dontChange() {
+        google.script.host.close();
+        google.script.run.shareFile();
+      }
+    </script>
   </div>
 </body>
 
