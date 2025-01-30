@@ -61,7 +61,7 @@ var form_manager = /** @class */ (function () {
                 responses.push(new response(row[indexColumnName], row[indexColumnSurname], row[indexColumnAvailable], " ", " "));
             }
             else if ((row[indexColumnAvailable]) == "Disponibile, ma solo in alcune fasce orarie") {
-                responses.push(new response(row[indexColumnName], row[indexColumnSurname], row[indexColumnAvailable], row[indexColumnStartTime], row[indexColumnEndTime]));
+                responses.push(new response(row[indexColumnName], row[indexColumnSurname], row[indexColumnAvailable], Utilities.formatDate(row[indexColumnStartTime], Session.getScriptTimeZone(), "HH:mm:ss"), Utilities.formatDate(row[indexColumnEndTime], Session.getScriptTimeZone(), "HH:mm:ss")));
             }
         });
         return responses;
