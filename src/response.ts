@@ -14,28 +14,23 @@ class response {
         this.endTime = end;
     }
 
-    static compareWithStatistics(response: Array<response>) {
+    static compareWithStatistics(responses: Array<response>) {
         //Foglio di statistiche
         let file = DriveApp.getFilesByName("Copia di Servizio in commissione lauree_anonimizzato");
         let sheet = SpreadsheetApp.open(file.next());
         let values = sheet.getDataRange().getValues();
         let headers: Array<string> = values[0];
-        let average: Array<number> = [];
-        let names = response.map(response => response.name);
-        type teacher = {
-            name: String,
-            average: Number
-        }
-        let teachers: teacher[] = [];
         let columnAverage: string = "Media presenze";
         let columnName: string = "Nome";
         let indexColumnAverage: number = headers.indexOf(columnAverage);
         let indexColumnName: number = headers.indexOf(columnName);
-        values.forEach(function (row) {
-            if (names.includes(row[indexColumnName])) {
-                teachers.push({ name: row[indexColumnName], average: row[indexColumnAverage] })
+        values[0].forEach(function (row) {
+            if (response.name.includes(row[indexColumnName])) {
+                
             }
         })
-        return teachers;
+    }
+    private commissionSuggestion(teachers: Array<response>) {
+
     }
 }

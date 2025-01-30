@@ -2,25 +2,49 @@
 <html>
 
 <head>
-
 </head>
 
 <body>
-  <div>
-    <h1>Vuoi cambiare i file impostati in precedenza?</h1>
-    <button onclick="change()">Si</button>
-    <button onclick="dontChange();">No</button>
-    <script>
-      function change() {
-        google.script.host.close();
-        google.script.run.changeSetting();
-      }
-      function dontChange() {
-        google.script.host.close();
-        google.script.run.shareFile();
-      }
-    </script>
-  </div>
+  <script>
+    function changeDoc() {
+      google.script.host.close();
+      google.script.run.changeDoc();
+    }
+    function changeForm() {
+      google.script.host.close();
+      google.script.run.changeForm();
+    }
+    function changeSheet() {
+      google.script.host.close();
+      google.script.run.changeSheet();
+    }
+    function next() {
+      google.script.host.close();
+      google.script.run.shareFile();
+    }
+    function getInfo() {
+      google.script.run.withSuccessHandler(function (response) {
+        document.getElementById("docName").innerHTML = response + " ";
+      }).getDocName();
+
+      google.script.run.withSuccessHandler(function (response) {
+        document.getElementById("formName").innerHTML = response + " ";
+      }).getFormName();
+
+      google.script.run.withSuccessHandler(function (response) {
+        document.getElementById("sheetName").innerHTML = response + " ";
+      }).getSheetName();
+    }
+    window.onload = getInfo;
+  </script>
+  <h1>Impostazione File</h1>
+  <h2>Documento per i relatori: </h2>
+  <span id="docName"></span><button onclick="changeDoc()">Modifica</button>
+  <h2>Form per le disponibilità</h2>
+  <span id="formName"></span><button onclick="changeForm()">Modifica</button>
+  <h2>Sheet per le statistiche</h2>
+  <span id="sheetName"></span><button onclick="changeSheet()">Modifica</button>
+  <button onclick="next()">Avanti</button>
 </body>
 
 </html>

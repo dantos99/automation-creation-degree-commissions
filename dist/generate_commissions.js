@@ -2,29 +2,27 @@ var generate_commissions = /** @class */ (function () {
     function generate_commissions() {
     }
     generate_commissions.start = function () {
-        new generate_commissions().settingFile();
+        generate_commissions.showSettingFile();
     };
-    generate_commissions.prototype.settingFile = function () {
-        var properties = PropertiesService.getScriptProperties();
-        if ((properties.getProperty("docId")) != null && (properties.getProperty("formId")) != null) {
-            var html = HtmlService.createHtmlOutputFromFile('html/setting.html').setWidth(900).setHeight(500).setSandboxMode(HtmlService.SandboxMode.IFRAME);
-            SpreadsheetApp.getUi().showModalDialog(html, " ");
-        }
-        else {
-            generate_commissions.requestGraduation();
-        }
+    //Mostra la pagina di impostaizioni dell'utente
+    generate_commissions.showSettingFile = function () {
+        var html = HtmlService.createHtmlOutputFromFile('html/setting.html').setWidth(900).setHeight(500).setSandboxMode(HtmlService.SandboxMode.IFRAME);
+        SpreadsheetApp.getUi().showModalDialog(html, " ");
     };
     //Mostra i documenti presenti in drive
-    generate_commissions.prototype.showPickerDocs = function () {
-        PropertiesService.getScriptProperties().setProperty("step", "docId");
+    generate_commissions.showPickerDocs = function () {
         var html = HtmlService.createHtmlOutputFromFile('html/docs').setWidth(900).setHeight(500).setSandboxMode(HtmlService.SandboxMode.IFRAME);
         SpreadsheetApp.getUi().showModalDialog(html, 'Seleziona il Documento da condividere con i relatori');
     };
     //Mostra i forms presenti in drive
-    generate_commissions.showPickerForm = function (id) {
-        PropertiesService.getScriptProperties().setProperty("step", "formId");
+    generate_commissions.showPickerForm = function () {
         var html = HtmlService.createHtmlOutputFromFile('html/forms').setWidth(900).setHeight(500).setSandboxMode(HtmlService.SandboxMode.IFRAME);
         SpreadsheetApp.getUi().showModalDialog(html, 'Seleziona il Form per la richiesta di disponibilità');
+    };
+    //Mostra gli sheet presenti in drive
+    generate_commissions.showPickerSheet = function () {
+        var html = HtmlService.createHtmlOutputFromFile('html/sheet').setWidth(900).setHeight(500).setSandboxMode(HtmlService.SandboxMode.IFRAME);
+        SpreadsheetApp.getUi().showModalDialog(html, 'Seleziona il file per le statistiche delle presenze dei prof');
     };
     //Richiesta numero di laureandi oltre il quale creare più commissioni
     generate_commissions.requestGraduation = function () {
@@ -37,7 +35,7 @@ var generate_commissions = /** @class */ (function () {
             generate_commissions.requestGraduation();
         }
         else {
-            new generate_commissions().showPickerDocs();
+            generate_commissions.showPickerDocs();
         }
     };
     return generate_commissions;
@@ -46,20 +44,56 @@ function getOAuthToken() {
     DriveApp.getRootFolder();
     return ScriptApp.getOAuthToken();
 }
-function nextStep(data) {
-    if ((PropertiesService.getScriptProperties().getProperty("step")) == "docId") {
-        PropertiesService.getScriptProperties().setProperty("docId", data);
-        generate_commissions.showPickerForm(data);
+function getDocName() {
+    var docId = PropertiesService.getUserProperties().getProperty("docId");
+    if (docId != null) {
+        return DriveApp.getFileById(docId).getName();
     }
-    else if ((PropertiesService.getScriptProperties().getProperty("step")) == "formId") {
-        shareFile();
+    else {
+        return ("Non presente");
     }
 }
-function changeSetting() {
-    generate_commissions.requestGraduation();
+function getFormName() {
+    var formId = PropertiesService.getUserProperties().getProperty("formId");
+    if (formId != null) {
+        return DriveApp.getFileById(formId).getName();
+    }
+    else {
+        return ("Non presente");
+    }
+}
+function getSheetName() {
+    var sheetId = PropertiesService.getUserProperties().getProperty("sheetId");
+    if (sheetId != null) {
+        return DriveApp.getFileById(sheetId).getName();
+    }
+    else {
+        return ("Non presente");
+    }
+}
+function changeDoc() {
+    generate_commissions.showPickerDocs();
+}
+function changeForm() {
+    generate_commissions.showPickerForm();
+}
+function changeSheet() {
+    generate_commissions.showPickerForm();
+}
+function setFormId(id) {
+    PropertiesService.getUserProperties().setProperty("formId", id);
+    generate_commissions.showSettingFile();
+}
+function setDocId(id) {
+    PropertiesService.getUserProperties().setProperty("docId", id);
+    generate_commissions.showSettingFile();
+}
+function setSheetId(id) {
+    PropertiesService.getUserProperties().setProperty("sheetId", id);
+    generate_commissions.showSettingFile();
 }
 function shareFile() {
-    var properties = PropertiesService.getScriptProperties();
+    var properties = PropertiesService.getUserProperties();
     var docId = properties.getProperty("docId");
     var formId = properties.getProperty("formId");
     doc_manager.shareDocToSupervisor(docId);

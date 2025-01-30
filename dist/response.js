@@ -6,25 +6,26 @@ var response = /** @class */ (function () {
         this.startTime = start;
         this.endTime = end;
     }
-    response.compareWithStatistics = function (response) {
+    response.compareWithStatistics = function (responses) {
         //Foglio di statistiche
         var file = DriveApp.getFilesByName("Copia di Servizio in commissione lauree_anonimizzato");
         var sheet = SpreadsheetApp.open(file.next());
         var values = sheet.getDataRange().getValues();
         var headers = values[0];
-        var average = [];
-        var names = response.map(function (response) { return response.name; });
-        var teachers = [];
         var columnAverage = "Media presenze";
         var columnName = "Nome";
         var indexColumnAverage = headers.indexOf(columnAverage);
         var indexColumnName = headers.indexOf(columnName);
-        values.forEach(function (row) {
-            if (names.includes(row[indexColumnName])) {
-                teachers.push({ name: row[indexColumnName + 1], average: row[indexColumnAverage] });
+        values[0].forEach(function (row) {
+            if (response.name.includes(row[indexColumnName])) {
+                Logger.log("OK");
             }
         });
-        return teachers;
+    };
+    response.prototype.commissionSuggestion = function (teachers) {
     };
     return response;
 }());
+function prova() {
+    response.compareWithStatistics(form_manager.selectResponse());
+}

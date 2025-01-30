@@ -52,8 +52,8 @@
         let formId = form.id
         google.script.run.withSuccessHandler(function () {
           google.script.host.close();
-        }).nextStep(formId);
-        
+        }).setFormId(formId);
+
       } else if (action == google.picker.Action.CANCEL) {
         google.script.host.close();
       }

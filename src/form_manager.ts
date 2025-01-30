@@ -68,6 +68,7 @@ class form_manager {
             throw new Error("Colonna 'Disponibile fino alle ore' non trovata.");
         }
 
+        //Seleziono tutti i docenti che hanno dato disbonibilità
         value.forEach(function (row) {
             if ((row[indexColumnAvailable]) == "Disponibile") {
                 responses.push(new response(row[indexColumnName], row[indexColumnSurname], row[indexColumnAvailable], " ", " "));

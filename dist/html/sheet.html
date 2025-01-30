@@ -31,7 +31,7 @@
         DocsView.setIncludeFolders(true);
         DocsView.setParent("root");
         let picker = new google.picker.PickerBuilder()
-          .addView(google.picker.ViewId.DOCUMENTS)
+          .addView(google.picker.ViewId.SPREADSHEETS)
           .setOAuthToken(token)
           .setDeveloperKey(DEVELOPER_KEY)
           .setCallback(pickerCallback)
@@ -48,11 +48,11 @@
     function pickerCallback(data) {
       let action = data[google.picker.Response.ACTION];
       if (action == google.picker.Action.PICKED) {
-        let doc = data[google.picker.Response.DOCUMENTS][0];
-        let docId = doc.id
+        let sheet = data[google.picker.Response.DOCUMENTS][0];
+        let sheetId = sheet.id
         google.script.run.withSuccessHandler(function () {
           google.script.host.close();
-        }).setDocId(docId);
+        }).setSheetId(sheetId);
       } else if (action == google.picker.Action.CANCEL) {
         google.script.host.close();
       }
