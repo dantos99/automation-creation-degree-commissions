@@ -3,7 +3,7 @@ function onOpen() {
 }
 
 function main() {
-    generate_commissions.start();
+    commissions_manager.start();
 }
 
 

@@ -1,8 +1,44 @@
 <!DOCTYPE html>
 <html>
 
+
 <head>
+  <style>
+    .doc h2,
+    p {
+      display: inline-block;
+    }
+
+
+    button {
+      margin: 20px;
+    }
+
+
+    .form h2,
+    p {
+      display: inline-block;
+    }
+
+
+    .sheet h2,
+    p {
+      display: inline-block;
+    }
+
+
+    .button-next {
+
+
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+
+
+    }
+  </style>
 </head>
+
 
 <body>
   <script>
@@ -37,14 +73,33 @@
     }
     window.onload = getInfo;
   </script>
-  <h1>Impostazione File</h1>
-  <h2>Documento per i relatori: </h2>
-  <span id="docName"></span><button onclick="changeDoc()">Modifica</button>
-  <h2>Form per le disponibilità</h2>
-  <span id="formName"></span><button onclick="changeForm()">Modifica</button>
-  <h2>Sheet per le statistiche</h2>
-  <span id="sheetName"></span><button onclick="changeSheet()">Modifica</button>
-  <button onclick="next()">Avanti</button>
+  <div class="container">
+
+
+    <h1>Impostazione File</h1>
+    <div class="doc">
+
+
+      <h2>Documento per i relatori: </h2>
+      <p id="docName"></p><button onclick="changeDoc()">Modifica</button>
+    </div>
+    <div class="form">
+
+
+      <h2>Form per le disponibilità:</h2>
+      <p id="formName"></p><button onclick="changeForm()">Modifica</button>
+    </div>
+    <div class="sheet">
+
+
+      <h2>Sheet per le statistiche:</h2>
+      <p id="sheetName"></p><button onclick="changeSheet()">Modifica</button>
+    </div>
+    <button class="button-next" onclick="next()">Avanti</button>
+
+
+  </div>
 </body>
+
 
 </html>
