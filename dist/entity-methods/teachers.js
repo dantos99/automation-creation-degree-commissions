@@ -30,7 +30,7 @@ var teachers = /** @class */ (function () {
                     email_1.push(row[indexEmailTeachers_1]);
                 }
             });
-            email_1 = email_1.filter(function (value) { return value !== ""; });
+            email_1 = Array.from(new Set(email_1));
             return email_1;
         }
     };

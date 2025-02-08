@@ -3,6 +3,7 @@ var form_response = /** @class */ (function () {
         this.email = email;
         this.name = name;
         this.surname = surname;
+        this.available = available;
         this.start_time = start_time;
         this.end_time = end_time;
     }
@@ -45,11 +46,13 @@ var form_response = /** @class */ (function () {
             }
             //Seleziono tutti i docenti che hanno dato disbonibilità
             value.forEach(function (row) {
-                if ((row[indexColumnAvailable_1]) == "Disponibile") {
-                    responses_1.push(new form_response(row[indexColumnEmail_1], row[indexColumnName_1], row[indexColumnSurname_1], row[indexColumnAvailable_1], " ", " "));
-                }
-                else if ((row[indexColumnAvailable_1]) == "Disponibile, ma solo in alcune fasce orarie") {
-                    responses_1.push(new form_response(row[indexColumnEmail_1], row[indexColumnName_1], row[indexColumnSurname_1], row[indexColumnAvailable_1], Utilities.formatDate(row[indexColumnStartTime_1], Session.getScriptTimeZone(), "HH:mm"), Utilities.formatDate(row[indexColumnEndTime_1], Session.getScriptTimeZone(), "HH:mm")));
+                if ((row[indexColumnAvailable_1]) != "Non Disponibile") {
+                    if ((row[indexColumnAvailable_1]) == "Disponibile, ma solo in alcune fasce orarie") {
+                        responses_1.push(new form_response(row[indexColumnEmail_1], row[indexColumnName_1], row[indexColumnSurname_1], row[indexColumnAvailable_1], Utilities.formatDate(row[indexColumnStartTime_1], Session.getScriptTimeZone(), "HH:mm"), Utilities.formatDate(row[indexColumnEndTime_1], Session.getScriptTimeZone(), "HH:mm")));
+                    }
+                    else {
+                        responses_1.push(new form_response(row[indexColumnEmail_1], row[indexColumnName_1], row[indexColumnSurname_1], row[indexColumnAvailable_1], " ", " "));
+                    }
                 }
             });
             return responses_1;

@@ -10,6 +10,7 @@ class form_response {
         this.email = email;
         this.name = name;
         this.surname = surname;
+        this.available = available;
         this.start_time = start_time;
         this.end_time = end_time;
     }
@@ -61,10 +62,12 @@ class form_response {
 
             //Seleziono tutti i docenti che hanno dato disbonibilità
             value.forEach(function (row) {
-                if ((row[indexColumnAvailable]) == "Disponibile") {
-                    responses.push(new form_response(row[indexColumnEmail], row[indexColumnName], row[indexColumnSurname], row[indexColumnAvailable], " ", " "));
-                } else if ((row[indexColumnAvailable]) == "Disponibile, ma solo in alcune fasce orarie") {
-                    responses.push(new form_response(row[indexColumnEmail], row[indexColumnName], row[indexColumnSurname], row[indexColumnAvailable], Utilities.formatDate(row[indexColumnStartTime], Session.getScriptTimeZone(), "HH:mm"), Utilities.formatDate(row[indexColumnEndTime], Session.getScriptTimeZone(), "HH:mm")));
+                if ((row[indexColumnAvailable]) != "Non Disponibile") {
+                    if ((row[indexColumnAvailable]) == "Disponibile, ma solo in alcune fasce orarie") {
+                        responses.push(new form_response(row[indexColumnEmail], row[indexColumnName], row[indexColumnSurname], row[indexColumnAvailable], Utilities.formatDate(row[indexColumnStartTime], Session.getScriptTimeZone(), "HH:mm"), Utilities.formatDate(row[indexColumnEndTime], Session.getScriptTimeZone(), "HH:mm")));
+                    } else {
+                        responses.push(new form_response(row[indexColumnEmail], row[indexColumnName], row[indexColumnSurname], row[indexColumnAvailable], " ", " "));
+                    }
                 }
             });
             return responses;

@@ -13,10 +13,9 @@ var forms = /** @class */ (function () {
         //Collego il form allo spreadsheet corrente per memorizzare le risposte
         var spreadSheet = SpreadsheetApp.getActiveSpreadsheet();
         var spreadSheetId = spreadSheet.getId();
-        var existingSheets = spreadSheet.getSheets().map(function (sheet) { return sheet.getName(); });
         form.setDestination(FormApp.DestinationType.SPREADSHEET, spreadSheetId);
         //Cambio il nome allo sheet che conterrà le risposte
-        var responseSheet = spreadSheet.getSheets().find(function (sheet) { return !existingSheets.includes(sheet.getName()); });
+        var responseSheet = spreadSheet.getSheets().find(function (sheet) { return sheet.getName().includes("Risposte del modulo"); });
         if (!responseSheet) {
             SpreadsheetApp.getUi().alert("Lo sheet per le risposte non è stato collegato correttamente");
         }
@@ -45,7 +44,7 @@ var forms = /** @class */ (function () {
                 dayAdded++;
             }
         }
-        ScriptApp.newTrigger("commissions_manager.createCommission").timeBased().at(date).create();
+        ScriptApp.newTrigger("createCommission").timeBased().at(date).create();
     };
     //Mostra i forms presenti in drive
     forms.showPickerForm = function () {

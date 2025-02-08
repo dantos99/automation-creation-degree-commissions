@@ -4,11 +4,11 @@ class commissions_manager {
         settings.showSettingFile();
     }
 
-    static createCommission() {
-        let responseForm = form_response.getFormResponses();
-        let teacherAvailable = sheets.compareResponseFormWithStatistics(responseForm);
-        commission.new(teacherAvailable);
-    }
+}
+function createCommission() {
+    let responseForm = form_response.getFormResponses();
+    let teacherAvailable = sheets.compareResponseFormWithStatistics(responseForm);
+    commission.new(teacherAvailable);
 }
 
 function shareFile() {

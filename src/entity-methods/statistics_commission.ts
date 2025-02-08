@@ -23,7 +23,10 @@ class statistic_commission {
             const indexColumnName: number = headers.indexOf(columnName);
             let teachersStatistics: Array<statistic_commission> = [];
             values.forEach((row) => {
-                teachersStatistics.push(new statistic_commission(row[indexColumnName], row[indexColumnAverage]));
+                if (row[indexColumnName] != "Nome") {
+
+                    teachersStatistics.push(new statistic_commission(row[indexColumnName], row[indexColumnAverage]));
+                }
             });
             return teachersStatistics;
         }

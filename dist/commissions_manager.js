@@ -4,13 +4,13 @@ var commissions_manager = /** @class */ (function () {
     commissions_manager.start = function () {
         settings.showSettingFile();
     };
-    commissions_manager.createCommission = function () {
-        var responseForm = form_response.getFormResponses();
-        var teacherAvailable = sheets.compareResponseFormWithStatistics(responseForm);
-        commission.new(teacherAvailable);
-    };
     return commissions_manager;
 }());
+function createCommission() {
+    var responseForm = form_response.getFormResponses();
+    var teacherAvailable = sheets.compareResponseFormWithStatistics(responseForm);
+    commission.new(teacherAvailable);
+}
 function shareFile() {
     var properties = PropertiesService.getUserProperties();
     var docId = properties.getProperty('docId');

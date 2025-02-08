@@ -9,13 +9,13 @@ class teachers {
 
         //Foglio Elenco Docenti
         let sheetTeachersName: string = "elenco docenti";
-        
+
         let sheetTeachers = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetTeachersName);
         if (!sheetTeachers) {
-            
+
             SpreadsheetApp.getUi().alert("Sheet " + sheetTeachersName + " non presente");
         } else {
-            
+
             let valuesSheetTeachers = sheetTeachers.getDataRange().getValues();
             const columnCDS = "CORSO";
 
@@ -40,7 +40,7 @@ class teachers {
                     email.push(row[indexEmailTeachers]);
                 }
             });
-            email = email.filter(value => value !== "");
+            email = Array.from(new Set(email));
             return email;
         }
     }

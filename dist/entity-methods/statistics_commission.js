@@ -19,7 +19,9 @@ var statistic_commission = /** @class */ (function () {
             var indexColumnName_1 = headers.indexOf(columnName);
             var teachersStatistics_1 = [];
             values.forEach(function (row) {
-                teachersStatistics_1.push(new statistic_commission(row[indexColumnName_1], row[indexColumnAverage_1]));
+                if (row[indexColumnName_1] != "Nome") {
+                    teachersStatistics_1.push(new statistic_commission(row[indexColumnName_1], row[indexColumnAverage_1]));
+                }
             });
             return teachersStatistics_1;
         }

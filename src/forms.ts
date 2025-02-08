@@ -20,11 +20,10 @@ class forms {
         //Collego il form allo spreadsheet corrente per memorizzare le risposte
         let spreadSheet = SpreadsheetApp.getActiveSpreadsheet();
         let spreadSheetId = spreadSheet.getId();
-        let existingSheets = spreadSheet.getSheets().map(sheet => sheet.getName());
         form.setDestination(FormApp.DestinationType.SPREADSHEET, spreadSheetId);
 
         //Cambio il nome allo sheet che conterrà le risposte
-        let responseSheet = spreadSheet.getSheets().find(sheet => !existingSheets.includes(sheet.getName()));
+        let responseSheet = spreadSheet.getSheets().find(sheet => sheet.getName().includes("Risposte del modulo"));
 
         if (!responseSheet) {
 
@@ -60,7 +59,7 @@ class forms {
                 dayAdded++;
             }
         }
-        ScriptApp.newTrigger("commissions_manager.createCommission").timeBased().at(date).create();
+        ScriptApp.newTrigger("createCommission").timeBased().at(date).create();
     }
 
     //Mostra i forms presenti in drive
