@@ -1,7 +1,7 @@
 class commission_manager {
 
     public static start() {
-        setting.showSettingFile();
+        Setting.showSettingFile();
     }
 
     public static shareFile() {
@@ -11,18 +11,18 @@ class commission_manager {
         const sheetId = properties.getProperty('sheetId');
         if (docId == null || formId == null || sheetId == null) {
             SpreadsheetApp.getUi().alert("Attenzione!! Inserire i file mancanti per andate avanti");
-            setting.showSettingFile();
+            Setting.showSettingFile();
         } else {
 
-            document.shareDocToSupervisor(docId);
-            form.shareFormAvailability(formId);
+            Document.shareDocToSupervisor(docId);
+            Form.shareFormAvailability(formId);
         }
     }
 
     public static createCommission() {
-        let responseForm = form_response.getFormResponses();
-        let teacherAvailable = sheet.compareResponseFormWithStatistics(responseForm);
-        commission.new(teacherAvailable);
+        let responseForm = Form_Response.getFormResponses();
+        let teacherAvailable = Sheet.compareResponseFormWithStatistics(responseForm);
+        Commission.new(teacherAvailable);
     }
 }
 

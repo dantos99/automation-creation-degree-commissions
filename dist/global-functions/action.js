@@ -1,8 +1,10 @@
 function createCommission() {
-    var responseForm = form_response.getFormResponses();
-    var teacherAvailable = sheet.compareResponseFormWithStatistics(responseForm);
-    commission.new(teacherAvailable);
+    commission_manager.createCommission();
 }
 function shareFile() {
     commission_manager.shareFile();
+}
+function getOAuthToken() {
+    DriveApp.getRootFolder();
+    return ScriptApp.getOAuthToken();
 }

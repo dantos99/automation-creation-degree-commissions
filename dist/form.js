@@ -1,8 +1,8 @@
-var form = /** @class */ (function () {
-    function form() {
+var Form = /** @class */ (function () {
+    function Form() {
     }
     //Funzione che invia Form per la disponibilità ai docenti dei cds
-    form.shareFormAvailability = function (Id) {
+    Form.shareFormAvailability = function (Id) {
         //id del Form da inviare
         var formId = Id;
         //Recupero il link pubblico per la condivisione del Form
@@ -20,21 +20,21 @@ var form = /** @class */ (function () {
             SpreadsheetApp.getUi().alert("Lo sheet per le risposte non è stato collegato correttamente");
         }
         else {
-            responseSheet.setName("Risposte al Form");
+            responseSheet.setName(sheetFormName);
             //Imposto l'email da iviare
             var object = "Form Disponibilità";
             var messageText = formUrl; //Da aggiungere frasi cordiali (es. Buongiorno..ecc)
             //Recupero le email dei docenti che insegnano nei cds dei laureandi
-            var emailTeachers = teacher.getEmailCdsTeachers(graduate.getCds());
+            var emailTeachers = Teacher.getEmailCdsTeachers(Graduate.getCds());
             var i = 0;
             //Invio il form ai docenti dei cds
             for (i = 0; i < emailTeachers.length; i++) {
                 MailApp.sendEmail(emailTeachers[i], object, messageText);
             }
-            form.createTrigger();
+            Form.createTrigger();
         }
     };
-    form.createTrigger = function () {
+    Form.createTrigger = function () {
         var date = new Date();
         var dayAdded = 0;
         while (dayAdded < 3) {
@@ -47,11 +47,11 @@ var form = /** @class */ (function () {
         ScriptApp.newTrigger("createCommission").timeBased().at(date).create();
     };
     //Mostra i form presenti in drive
-    form.showPickerForm = function () {
+    Form.showPickerForm = function () {
         var html = HtmlService.createHtmlOutputFromFile('html/forms').setWidth(900).setHeight(500).setSandboxMode(HtmlService.SandboxMode.IFRAME);
         SpreadsheetApp.getUi().showModalDialog(html, 'Seleziona il Form per la richiesta di disponibilità');
     };
-    form.getFormName = function () {
+    Form.getFormName = function () {
         var formId = PropertiesService.getUserProperties().getProperty("formId");
         if (formId != null) {
             return DriveApp.getFileById(formId).getName();
@@ -60,5 +60,9 @@ var form = /** @class */ (function () {
             return ("Non presente");
         }
     };
-    return form;
+    Form.setFormId = function (id) {
+        PropertiesService.getUserProperties().setProperty("formId", id);
+        Setting.showSettingFile();
+    };
+    return Form;
 }());

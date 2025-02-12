@@ -1,12 +1,12 @@
-var graduate = /** @class */ (function () {
-    function graduate(email_supervisor, corso) {
+var sheetMainName = "Elenco Laureandi";
+var Graduate = /** @class */ (function () {
+    function Graduate(email_supervisor, corso) {
         this.corso = corso;
         this.email_supervisor = email_supervisor;
     }
     //Funzione che restituisce le email dei relatori
-    graduate.getAllEmailSupervisorOfGraduate = function () {
+    Graduate.getAllEmailSupervisorOfGraduate = function () {
         //Foglio Lauree
-        var sheetMainName = "Foglio1";
         var sheetMain = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetMainName);
         if (!sheetMain) {
             SpreadsheetApp.getUi().alert("Sheet " + sheetMainName + " non presente");
@@ -32,8 +32,8 @@ var graduate = /** @class */ (function () {
             return teachers_1;
         }
     };
-    graduate.getCds = function () {
-        var sheetMain = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Foglio1");
+    Graduate.getCds = function () {
+        var sheetMain = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetMainName);
         //Creo un array con il contenuto della prima riga
         var valuesSheet = sheetMain.getDataRange().getValues();
         var headers = valuesSheet[0];
@@ -54,5 +54,5 @@ var graduate = /** @class */ (function () {
         cds = Array.from(new Set(cds));
         return cds;
     };
-    return graduate;
+    return Graduate;
 }());

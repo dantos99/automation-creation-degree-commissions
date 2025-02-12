@@ -1,4 +1,6 @@
-class form_response {
+const sheetFormName = "Risposte al Form";
+
+class Form_Response {
     email: string;
     name: string;
     surname: string;
@@ -14,10 +16,10 @@ class form_response {
         this.start_time = start_time;
         this.end_time = end_time;
     }
-    public static getFormResponses(): Array<form_response> {
+    public static getFormResponses(): Array<Form_Response> {
 
         //Foglio che contiene le risposte
-        let sheetResponse = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Risposte al Form");
+        let sheetResponse = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetFormName);
         if (!sheetResponse) {
             SpreadsheetApp.getUi().alert("Sheet contenente le risposte del form non trovato");
         } else {
@@ -28,7 +30,7 @@ class form_response {
             let headers = value[0];
 
             //Array che conterrà le risposte
-            let responses: Array<form_response> = [];
+            let responses: Array<Form_Response> = [];
 
             //Trovo gli indici di tutti i campi che mi interessano
             const indexColumnEmail: number = headers.indexOf("Indirizzo email");
@@ -64,9 +66,9 @@ class form_response {
             value.forEach(function (row) {
                 if ((row[indexColumnAvailable]) != "Non Disponibile") {
                     if ((row[indexColumnAvailable]) == "Disponibile, ma solo in alcune fasce orarie") {
-                        responses.push(new form_response(row[indexColumnEmail], row[indexColumnName], row[indexColumnSurname], row[indexColumnAvailable], Utilities.formatDate(row[indexColumnStartTime], Session.getScriptTimeZone(), "HH:mm"), Utilities.formatDate(row[indexColumnEndTime], Session.getScriptTimeZone(), "HH:mm")));
+                        responses.push(new Form_Response(row[indexColumnEmail], row[indexColumnName], row[indexColumnSurname], row[indexColumnAvailable], Utilities.formatDate(row[indexColumnStartTime], Session.getScriptTimeZone(), "HH:mm"), Utilities.formatDate(row[indexColumnEndTime], Session.getScriptTimeZone(), "HH:mm")));
                     } else {
-                        responses.push(new form_response(row[indexColumnEmail], row[indexColumnName], row[indexColumnSurname], row[indexColumnAvailable], " ", " "));
+                        responses.push(new Form_Response(row[indexColumnEmail], row[indexColumnName], row[indexColumnSurname], row[indexColumnAvailable], " ", " "));
                     }
                 }
             });

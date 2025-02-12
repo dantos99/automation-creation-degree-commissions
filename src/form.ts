@@ -1,10 +1,10 @@
-class form {
+class Form {
 
     //Funzione che invia Form per la disponibilità ai docenti dei cds
     public static shareFormAvailability(Id: string) {
 
         //id del Form da inviare
-        let formId: string = Id;
+        const formId: string = Id;
 
         //Recupero il link pubblico per la condivisione del Form
         let formAvailability = FormApp.openById(formId);
@@ -28,14 +28,14 @@ class form {
 
         } else {
 
-            responseSheet.setName("Risposte al Form");
+            responseSheet.setName(sheetFormName);
             //Imposto l'email da iviare
             let object: string = "Form Disponibilità";
             let messageText: string = formUrl; //Da aggiungere frasi cordiali (es. Buongiorno..ecc)
 
 
             //Recupero le email dei docenti che insegnano nei cds dei laureandi
-            var emailTeachers = teacher.getEmailCdsTeachers(graduate.getCds());
+            var emailTeachers = Teacher.getEmailCdsTeachers(Graduate.getCds());
 
             let i: number = 0;
             //Invio il form ai docenti dei cds
@@ -43,7 +43,7 @@ class form {
                 MailApp.sendEmail(emailTeachers[i], object, messageText);
             }
 
-            form.createTrigger();
+            Form.createTrigger();
         }
 
     }
@@ -77,6 +77,10 @@ class form {
         else {
             return ("Non presente");
         }
+    }
+    public static setFormId(id: string) {
+        PropertiesService.getUserProperties().setProperty("formId", id);
+        Setting.showSettingFile();
     }
 }
 

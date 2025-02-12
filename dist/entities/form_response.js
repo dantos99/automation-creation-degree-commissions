@@ -1,5 +1,6 @@
-var form_response = /** @class */ (function () {
-    function form_response(email, name, surname, available, start_time, end_time) {
+var sheetFormName = "Risposte al Form";
+var Form_Response = /** @class */ (function () {
+    function Form_Response(email, name, surname, available, start_time, end_time) {
         this.email = email;
         this.name = name;
         this.surname = surname;
@@ -7,9 +8,9 @@ var form_response = /** @class */ (function () {
         this.start_time = start_time;
         this.end_time = end_time;
     }
-    form_response.getFormResponses = function () {
+    Form_Response.getFormResponses = function () {
         //Foglio che contiene le risposte
-        var sheetResponse = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Risposte al Form");
+        var sheetResponse = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetFormName);
         if (!sheetResponse) {
             SpreadsheetApp.getUi().alert("Sheet contenente le risposte del form non trovato");
         }
@@ -48,15 +49,15 @@ var form_response = /** @class */ (function () {
             value.forEach(function (row) {
                 if ((row[indexColumnAvailable_1]) != "Non Disponibile") {
                     if ((row[indexColumnAvailable_1]) == "Disponibile, ma solo in alcune fasce orarie") {
-                        responses_1.push(new form_response(row[indexColumnEmail_1], row[indexColumnName_1], row[indexColumnSurname_1], row[indexColumnAvailable_1], Utilities.formatDate(row[indexColumnStartTime_1], Session.getScriptTimeZone(), "HH:mm"), Utilities.formatDate(row[indexColumnEndTime_1], Session.getScriptTimeZone(), "HH:mm")));
+                        responses_1.push(new Form_Response(row[indexColumnEmail_1], row[indexColumnName_1], row[indexColumnSurname_1], row[indexColumnAvailable_1], Utilities.formatDate(row[indexColumnStartTime_1], Session.getScriptTimeZone(), "HH:mm"), Utilities.formatDate(row[indexColumnEndTime_1], Session.getScriptTimeZone(), "HH:mm")));
                     }
                     else {
-                        responses_1.push(new form_response(row[indexColumnEmail_1], row[indexColumnName_1], row[indexColumnSurname_1], row[indexColumnAvailable_1], " ", " "));
+                        responses_1.push(new Form_Response(row[indexColumnEmail_1], row[indexColumnName_1], row[indexColumnSurname_1], row[indexColumnAvailable_1], " ", " "));
                     }
                 }
             });
             return responses_1;
         }
     };
-    return form_response;
+    return Form_Response;
 }());

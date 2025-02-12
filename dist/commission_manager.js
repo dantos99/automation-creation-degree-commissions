@@ -2,7 +2,7 @@ var commission_manager = /** @class */ (function () {
     function commission_manager() {
     }
     commission_manager.start = function () {
-        setting.showSettingFile();
+        Setting.showSettingFile();
     };
     commission_manager.shareFile = function () {
         var properties = PropertiesService.getUserProperties();
@@ -11,17 +11,17 @@ var commission_manager = /** @class */ (function () {
         var sheetId = properties.getProperty('sheetId');
         if (docId == null || formId == null || sheetId == null) {
             SpreadsheetApp.getUi().alert("Attenzione!! Inserire i file mancanti per andate avanti");
-            setting.showSettingFile();
+            Setting.showSettingFile();
         }
         else {
-            document.shareDocToSupervisor(docId);
-            form.shareFormAvailability(formId);
+            Document.shareDocToSupervisor(docId);
+            Form.shareFormAvailability(formId);
         }
     };
     commission_manager.createCommission = function () {
-        var responseForm = form_response.getFormResponses();
-        var teacherAvailable = sheet.compareResponseFormWithStatistics(responseForm);
-        commission.new(teacherAvailable);
+        var responseForm = Form_Response.getFormResponses();
+        var teacherAvailable = Sheet.compareResponseFormWithStatistics(responseForm);
+        Commission.new(teacherAvailable);
     };
     return commission_manager;
 }());

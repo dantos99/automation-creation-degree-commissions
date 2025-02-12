@@ -1,4 +1,4 @@
-class setting {
+class Setting {
 
     //Mostra la pagina di impostaizioni dell'utente
     public static showSettingFile() {

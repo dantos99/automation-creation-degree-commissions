@@ -1,12 +1,11 @@
 function getSheetName() {
-    return sheet.getSheetName();
+    return Sheet.getSheetName();
 }
 //Cambia lo sheet
 function changeSheet() {
-    sheet.showPickerSheet();
+    Sheet.showPickerSheet();
 }
 //Imposta lo sheet
 function setSheetId(id) {
-    PropertiesService.getUserProperties().setProperty("sheetId", id);
-    setting.showSettingFile();
+    Sheet.setSheetId(id);
 }

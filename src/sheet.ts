@@ -1,13 +1,13 @@
-class sheet {
-    public static compareResponseFormWithStatistics(responses: Array<form_response>): Array<form_response> {
+class Sheet {
+    public static compareResponseFormWithStatistics(responses: Array<Form_Response>): Array<Form_Response> {
 
-        let statistics = statistic_commission.getTeachersStatistics();
+        let statistics = Statistic_Commission.getTeachersStatistics();
         statistics.sort((a, b) => a.averagePresence - b.averagePresence)
-        let teacherSortWhitAverage: Array<form_response> = [];
+        let teacherSortWhitAverage: Array<Form_Response> = [];
         statistics.forEach((statistic) => {
             responses.forEach((response) => {
                 if (statistic.name === response.name) {
-                    teacherSortWhitAverage.push(new form_response(response.email, response.name, response.surname, response.available, response.start_time, response.end_time));
+                    teacherSortWhitAverage.push(new Form_Response(response.email, response.name, response.surname, response.available, response.start_time, response.end_time));
 
                 }
             });
@@ -31,5 +31,11 @@ class sheet {
         else {
             return ("Non presente");
         }
+    }
+    
+    //Imposta lo sheet
+    public static setSheetId(id: string) {
+        PropertiesService.getUserProperties().setProperty("sheetId", id);
+        Setting.showSettingFile();
     }
 }

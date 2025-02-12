@@ -1,17 +1,11 @@
 function getDocName() {
-    return document.getDocName();
+    return Document.getDocName();
 }
 
 function changeDoc() {
-    document.showPickerDocs();
+    Document.showPickerDocs();
 }
 
 function setDocId(id: string) {
-    PropertiesService.getUserProperties().setProperty("docId", id);
-    setting.showSettingFile();
-}
-
-function getOAuthToken() {
-    DriveApp.getRootFolder();
-    return ScriptApp.getOAuthToken();
+    Document.setDocId(id);
 }

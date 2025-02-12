@@ -1,4 +1,6 @@
-class graduate {
+const sheetMainName = "Elenco Laureandi";
+
+class Graduate {
 
     email_supervisor: string;
     corso: string;
@@ -13,7 +15,6 @@ class graduate {
     public static getAllEmailSupervisorOfGraduate(): Array<string> {
 
         //Foglio Lauree
-        const sheetMainName = "Foglio1";
         let sheetMain = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetMainName);
 
         if (!sheetMain) {
@@ -48,7 +49,7 @@ class graduate {
 
     public static getCds(): Array<string> {
 
-        let sheetMain = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Foglio1");
+        let sheetMain = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetMainName);
 
         //Creo un array con il contenuto della prima riga
         let valuesSheet: Array<Array<string>> = sheetMain.getDataRange().getValues();

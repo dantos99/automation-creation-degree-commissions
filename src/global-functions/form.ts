@@ -1,10 +1,9 @@
 function getFormName() {
-    return form.getFormName();
+    return Form.getFormName();
 }
 function changeForm() {
-    form.showPickerForm();
+    Form.showPickerForm();
 }
 function setFormId(id: string) {
-    PropertiesService.getUserProperties().setProperty("formId", id);
-    setting.showSettingFile();
+    Form.setFormId(id);
 }

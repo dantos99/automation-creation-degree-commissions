@@ -1,9 +1,9 @@
-var statistic_commission = /** @class */ (function () {
-    function statistic_commission(name, averagePresence) {
+var Statistic_Commission = /** @class */ (function () {
+    function Statistic_Commission(name, averagePresence) {
         this.name = name;
         this.averagePresence = averagePresence;
     }
-    statistic_commission.getTeachersStatistics = function () {
+    Statistic_Commission.getTeachersStatistics = function () {
         //Foglio di statistiche
         var file = DriveApp.getFileById(PropertiesService.getUserProperties().getProperty("sheetId"));
         if (!file) {
@@ -11,9 +11,9 @@ var statistic_commission = /** @class */ (function () {
         }
         else {
             //Apro il foglio di statistiche
-            var sheet_1 = SpreadsheetApp.openById(PropertiesService.getUserProperties().getProperty("sheetId"));
+            var sheet = SpreadsheetApp.openById(PropertiesService.getUserProperties().getProperty("sheetId"));
             //Recupero i valori
-            var values = sheet_1.getDataRange().getValues();
+            var values = sheet.getDataRange().getValues();
             //Intestazioni delle colonne
             var headers = values[0];
             //Cerco gli indici delle colonne che mi interessano
@@ -25,11 +25,11 @@ var statistic_commission = /** @class */ (function () {
             var teachersStatistics_1 = [];
             values.forEach(function (row) {
                 if (row[indexColumnName_1] != "Nome") {
-                    teachersStatistics_1.push(new statistic_commission(row[indexColumnName_1], row[indexColumnAverage_1]));
+                    teachersStatistics_1.push(new Statistic_Commission(row[indexColumnName_1], row[indexColumnAverage_1]));
                 }
             });
             return teachersStatistics_1;
         }
     };
-    return statistic_commission;
+    return Statistic_Commission;
 }());

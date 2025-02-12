@@ -1,4 +1,6 @@
-class teacher {
+const sheetTeachersName: string = "Elenco Docenti";
+
+class Teacher {
     private name: string;
     private surname: string;
     private email: string;
@@ -15,7 +17,6 @@ class teacher {
     public static getEmailCdsTeachers(cds: Array<string>): Array<string> {
 
         //Foglio Elenco Docenti
-        let sheetTeachersName: string = "elenco docenti";
 
         let sheetTeachers = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetTeachersName);
         if (!sheetTeachers) {

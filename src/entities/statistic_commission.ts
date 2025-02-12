@@ -1,4 +1,4 @@
-class statistic_commission {
+class Statistic_Commission {
 
     name: string;
     averagePresence: number;
@@ -8,7 +8,7 @@ class statistic_commission {
         this.averagePresence = averagePresence;
     }
 
-    public static getTeachersStatistics(): Array<statistic_commission> {
+    public static getTeachersStatistics(): Array<Statistic_Commission> {
         //Foglio di statistiche
         const file = DriveApp.getFileById(PropertiesService.getUserProperties().getProperty("sheetId"));
         if (!file) {
@@ -30,11 +30,11 @@ class statistic_commission {
             const indexColumnName: number = headers.indexOf(columnName);
 
             //Ritorno un array con le statistiche dei docenti
-            let teachersStatistics: Array<statistic_commission> = [];
+            let teachersStatistics: Array<Statistic_Commission> = [];
             values.forEach((row) => {
                 if (row[indexColumnName] != "Nome") {
 
-                    teachersStatistics.push(new statistic_commission(row[indexColumnName], row[indexColumnAverage]));
+                    teachersStatistics.push(new Statistic_Commission(row[indexColumnName], row[indexColumnAverage]));
                 }
             });
             return teachersStatistics;

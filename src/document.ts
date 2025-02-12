@@ -1,4 +1,4 @@
-class document {
+class Document {
 
     //Funzione che condivide un Google doc con i relatori
     public static shareDocToSupervisor(Id: string) {
@@ -10,7 +10,7 @@ class document {
         let docToDoList = DriveApp.getFileById(docId);
 
         //Recupero le email dei relatori 
-        let emailSupervisor: Array<string> = graduate.getAllEmailSupervisorOfGraduate();
+        let emailSupervisor: Array<string> = Graduate.getAllEmailSupervisorOfGraduate();
 
         let i: number = 0;
         //Condivido il documento
@@ -33,5 +33,8 @@ class document {
             return ("Non presente");
         }
     }
-
+    public static setDocId(id: string) {
+        PropertiesService.getUserProperties().setProperty("docId", id);
+        Setting.showSettingFile();
+    }
 }

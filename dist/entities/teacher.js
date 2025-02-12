@@ -1,14 +1,14 @@
-var teacher = /** @class */ (function () {
-    function teacher(name, surname, email, cds) {
+var sheetTeachersName = "Elenco Docenti";
+var Teacher = /** @class */ (function () {
+    function Teacher(name, surname, email, cds) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.cds = cds;
     }
     //Funzione che restituisce le email dei prof dei tre cds
-    teacher.getEmailCdsTeachers = function (cds) {
+    Teacher.getEmailCdsTeachers = function (cds) {
         //Foglio Elenco Docenti
-        var sheetTeachersName = "elenco docenti";
         var sheetTeachers = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetTeachersName);
         if (!sheetTeachers) {
             SpreadsheetApp.getUi().alert("Sheet " + sheetTeachersName + " non presente");
@@ -37,5 +37,5 @@ var teacher = /** @class */ (function () {
             return emails_1;
         }
     };
-    return teacher;
+    return Teacher;
 }());
