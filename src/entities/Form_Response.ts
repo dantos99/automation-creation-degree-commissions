@@ -1,5 +1,7 @@
+//Nome dello sheet dal quale recuperare le risposte
 const sheetFormName = "Risposte al Form";
 
+//Classe che rappresenta le risposte al form
 class Form_Response {
     email: string;
     name: string;
@@ -16,10 +18,14 @@ class Form_Response {
         this.start_time = start_time;
         this.end_time = end_time;
     }
+
+    //Metodo per recuperare le risposte del form
     public static getFormResponses(): Array<Form_Response> {
 
         //Foglio che contiene le risposte
         let sheetResponse = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetFormName);
+        
+        //Controllo l'esistenza dello sheet
         if (!sheetResponse) {
             SpreadsheetApp.getUi().alert("Sheet contenente le risposte del form non trovato");
         } else {

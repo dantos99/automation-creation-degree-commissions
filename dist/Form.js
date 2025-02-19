@@ -1,3 +1,4 @@
+//Classe per gestire i file di tipo Google Form
 var Form = /** @class */ (function () {
     function Form() {
     }
@@ -34,6 +35,7 @@ var Form = /** @class */ (function () {
             Form.createTrigger();
         }
     };
+    //Metodo che crea un trigger che esegue la funzione createCommission dopo tre giorni lavorativi
     Form.createTrigger = function () {
         var date = new Date();
         var dayAdded = 0;
@@ -51,6 +53,7 @@ var Form = /** @class */ (function () {
         var html = HtmlService.createHtmlOutputFromFile('html/forms').setWidth(900).setHeight(500).setSandboxMode(HtmlService.SandboxMode.IFRAME);
         SpreadsheetApp.getUi().showModalDialog(html, 'Seleziona il Form per la richiesta di disponibilità');
     };
+    //Metodo che ritorna il Form impostato
     Form.getFormName = function () {
         var formId = PropertiesService.getUserProperties().getProperty("formId");
         if (formId != null) {
@@ -60,6 +63,7 @@ var Form = /** @class */ (function () {
             return ("Non presente");
         }
     };
+    //Metodo per settare il Form
     Form.setFormId = function (id) {
         PropertiesService.getUserProperties().setProperty("formId", id);
         Setting.showSettingFile();

@@ -1,10 +1,15 @@
+//Classe per gestire i file di tipo Google Sheet
 var Sheet = /** @class */ (function () {
     function Sheet() {
     }
+    //Metodo per comparare chi ha risposto al form in base ad una media delle presenze recuperata tramite il nome
     Sheet.compareResponseFormWithStatistics = function (responses) {
+        //Recupero le statistiche dei docenti
         var statistics = Statistic_Commission.getTeachersStatistics();
+        //Riordino le statistiche in base alla media
         statistics.sort(function (a, b) { return a.averagePresence - b.averagePresence; });
         var teacherSortWhitAverage = [];
+        //Inserisco in un nuovo array i docenti di interesse ordinati in base alla media delle presenze
         statistics.forEach(function (statistic) {
             responses.forEach(function (response) {
                 if (statistic.name === response.name) {

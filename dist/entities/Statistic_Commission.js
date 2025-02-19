@@ -1,11 +1,14 @@
+//Classe che rappresenta le statistiche dei docenti 
 var Statistic_Commission = /** @class */ (function () {
     function Statistic_Commission(name, averagePresence) {
         this.name = name;
         this.averagePresence = averagePresence;
     }
+    //Metodo per recuperare le statistiche
     Statistic_Commission.getTeachersStatistics = function () {
         //Foglio di statistiche
         var file = DriveApp.getFileById(PropertiesService.getUserProperties().getProperty("sheetId"));
+        //Controllo l'esistenza del file 
         if (!file) {
             SpreadsheetApp.getUi().alert("Sheet contenente le statistiche non trovato");
         }

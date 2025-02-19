@@ -1,5 +1,7 @@
+//Nome dello sheet contenente l'elenco docenti
 const sheetTeachersName: string = "Elenco Docenti";
 
+//Classe per rappresentare i docenti
 class Teacher {
     private name: string;
     private surname: string;
@@ -48,6 +50,7 @@ class Teacher {
                     emails.push(row[indexEmailTeachers], row[indexcolumnCDS]);
                 }
             });
+            emails = Array.from(new Set(emails));
             return emails;
         }
     }

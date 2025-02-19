@@ -1,4 +1,6 @@
+//Nome dello sheet dal quale recuperare le risposte
 var sheetFormName = "Risposte al Form";
+//Classe che rappresenta le risposte al form
 var Form_Response = /** @class */ (function () {
     function Form_Response(email, name, surname, available, start_time, end_time) {
         this.email = email;
@@ -8,9 +10,11 @@ var Form_Response = /** @class */ (function () {
         this.start_time = start_time;
         this.end_time = end_time;
     }
+    //Metodo per recuperare le risposte del form
     Form_Response.getFormResponses = function () {
         //Foglio che contiene le risposte
         var sheetResponse = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetFormName);
+        //Controllo l'esistenza dello sheet
         if (!sheetResponse) {
             SpreadsheetApp.getUi().alert("Sheet contenente le risposte del form non trovato");
         }

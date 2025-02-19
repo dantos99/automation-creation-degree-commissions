@@ -1,3 +1,4 @@
+//Classe per gestire i file di tipo Google Doc
 class Document {
 
     //Funzione che condivide un Google doc con i relatori
@@ -23,6 +24,7 @@ class Document {
         let html = HtmlService.createHtmlOutputFromFile('html/docs').setWidth(900).setHeight(500).setSandboxMode(HtmlService.SandboxMode.IFRAME);
         SpreadsheetApp.getUi().showModalDialog(html, 'Seleziona il Documento da condividere con i relatori');
     }
+    //Metodo che ritorna il nome del Doc impostato
     public static getDocName(): string {
 
         var docId = PropertiesService.getUserProperties().getProperty("docId");
@@ -33,6 +35,8 @@ class Document {
             return ("Non presente");
         }
     }
+
+    //Metodo per settare il Google Doc
     public static setDocId(id: string) {
         PropertiesService.getUserProperties().setProperty("docId", id);
         Setting.showSettingFile();

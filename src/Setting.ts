@@ -1,3 +1,4 @@
+//Classe per gestire le impostazioni di settaggio dei file
 class Setting {
 
     //Mostra la pagina di impostaizioni dell'utente

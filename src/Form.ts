@@ -1,3 +1,4 @@
+//Classe per gestire i file di tipo Google Form
 class Form {
 
     //Funzione che invia Form per la disponibilità ai docenti dei cds
@@ -48,6 +49,7 @@ class Form {
 
     }
 
+    //Metodo che crea un trigger che esegue la funzione createCommission dopo tre giorni lavorativi
     private static createTrigger() {
 
         let date = new Date();
@@ -68,6 +70,8 @@ class Form {
         let html = HtmlService.createHtmlOutputFromFile('html/forms').setWidth(900).setHeight(500).setSandboxMode(HtmlService.SandboxMode.IFRAME);
         SpreadsheetApp.getUi().showModalDialog(html, 'Seleziona il Form per la richiesta di disponibilità');
     }
+
+    //Metodo che ritorna il Form impostato
     public static getFormName(): string {
 
         var formId = PropertiesService.getUserProperties().getProperty("formId");
@@ -78,6 +82,8 @@ class Form {
             return ("Non presente");
         }
     }
+
+    //Metodo per settare il Form
     public static setFormId(id: string) {
         PropertiesService.getUserProperties().setProperty("formId", id);
         Setting.showSettingFile();

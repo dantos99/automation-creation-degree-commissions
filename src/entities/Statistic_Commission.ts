@@ -1,3 +1,4 @@
+//Classe che rappresenta le statistiche dei docenti 
 class Statistic_Commission {
 
     name: string;
@@ -8,12 +9,17 @@ class Statistic_Commission {
         this.averagePresence = averagePresence;
     }
 
+    //Metodo per recuperare le statistiche
     public static getTeachersStatistics(): Array<Statistic_Commission> {
+
         //Foglio di statistiche
         const file = DriveApp.getFileById(PropertiesService.getUserProperties().getProperty("sheetId"));
+        
+        //Controllo l'esistenza del file 
         if (!file) {
             SpreadsheetApp.getUi().alert("Sheet contenente le statistiche non trovato");
         } else {
+        
             //Apro il foglio di statistiche
             let sheet = SpreadsheetApp.openById(PropertiesService.getUserProperties().getProperty("sheetId"));
             

@@ -1,3 +1,4 @@
+//Classe per gestire le impostazioni di settaggio dei file
 var Setting = /** @class */ (function () {
     function Setting() {
     }

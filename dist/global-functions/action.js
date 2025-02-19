@@ -1,8 +1,8 @@
 function createCommission() {
-    commission_manager.createCommission();
+    Commission_Manager.createCommission();
 }
 function shareFile() {
-    commission_manager.shareFile();
+    Commission_Manager.shareFile();
 }
 function getOAuthToken() {
     DriveApp.getRootFolder();

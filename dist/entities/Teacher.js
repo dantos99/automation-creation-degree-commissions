@@ -1,4 +1,6 @@
+//Nome dello sheet contenente l'elenco docenti
 var sheetTeachersName = "Elenco Docenti";
+//Classe per rappresentare i docenti
 var Teacher = /** @class */ (function () {
     function Teacher(name, surname, email, cds) {
         this.name = name;
@@ -34,6 +36,7 @@ var Teacher = /** @class */ (function () {
                     emails_1.push(row[indexEmailTeachers_1], row[indexcolumnCDS_1]);
                 }
             });
+            emails_1 = Array.from(new Set(emails_1));
             return emails_1;
         }
     };

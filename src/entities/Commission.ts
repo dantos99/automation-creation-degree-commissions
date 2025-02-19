@@ -1,8 +1,12 @@
+//Nome dello sheet che verrà creato contenente la prosposta di commissione
 const sheetCommissionName = "Proposta di commissione";
 
+ //Classe che rappresenta la commissione proposte
 class Commission {
 
+    //Metodo per creare una nuova proposta di commissione
     public static new(teachers: Array<Form_Response>) {
+
         //Recupera lo spreadsheet attivo
         let spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
 

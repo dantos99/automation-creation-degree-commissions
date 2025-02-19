@@ -1,4 +1,6 @@
+//Nome dello sheet contenente i laureandi
 var sheetMainName = "Elenco Laureandi";
+//Classe che rappresenta un laureando
 var Graduate = /** @class */ (function () {
     function Graduate(email_supervisor, corso) {
         this.corso = corso;
@@ -8,6 +10,7 @@ var Graduate = /** @class */ (function () {
     Graduate.getAllEmailSupervisorOfGraduate = function () {
         //Foglio Lauree
         var sheetMain = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetMainName);
+        //Controlle l'esistenza dello sheet
         if (!sheetMain) {
             SpreadsheetApp.getUi().alert("Sheet " + sheetMainName + " non presente");
         }
@@ -32,11 +35,14 @@ var Graduate = /** @class */ (function () {
             return teachers_1;
         }
     };
+    //Metodo per recuperare tutti i corsi di studio presenti
     Graduate.getCds = function () {
+        //Recupero lo sheet 
         var sheetMain = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetMainName);
         //Creo un array con il contenuto della prima riga
         var valuesSheet = sheetMain.getDataRange().getValues();
         var headers = valuesSheet[0];
+        //Nome della colonna di interesse
         var columnCDS = "CORSO";
         //Cerco l'indice della colonna contenente i corsi di studio
         var indexcolumnCDS = headers.indexOf(columnCDS);

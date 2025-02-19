@@ -1,5 +1,7 @@
+//Nome dello sheet contenente i laureandi
 const sheetMainName = "Elenco Laureandi";
 
+//Classe che rappresenta un laureando
 class Graduate {
 
     email_supervisor: string;
@@ -17,6 +19,7 @@ class Graduate {
         //Foglio Lauree
         let sheetMain = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetMainName);
 
+        //Controlle l'esistenza dello sheet
         if (!sheetMain) {
             SpreadsheetApp.getUi().alert("Sheet " + sheetMainName + " non presente");
         } else {
@@ -47,14 +50,17 @@ class Graduate {
         }
     }
 
+    //Metodo per recuperare tutti i corsi di studio presenti
     public static getCds(): Array<string> {
 
+        //Recupero lo sheet 
         let sheetMain = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetMainName);
 
         //Creo un array con il contenuto della prima riga
         let valuesSheet: Array<Array<string>> = sheetMain.getDataRange().getValues();
         const headers: Array<string> = valuesSheet[0];
 
+        //Nome della colonna di interesse
         const columnCDS: string = "CORSO";
 
         //Cerco l'indice della colonna contenente i corsi di studio
@@ -71,7 +77,7 @@ class Graduate {
                 cds.push(row[indexcolumnCDS]);
             }
         });
-
+        
         //Elimino i duplicati
         cds = Array.from(new Set(cds));
         return cds;

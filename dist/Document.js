@@ -1,3 +1,4 @@
+//Classe per gestire i file di tipo Google Doc
 var Document = /** @class */ (function () {
     function Document() {
     }
@@ -20,6 +21,7 @@ var Document = /** @class */ (function () {
         var html = HtmlService.createHtmlOutputFromFile('html/docs').setWidth(900).setHeight(500).setSandboxMode(HtmlService.SandboxMode.IFRAME);
         SpreadsheetApp.getUi().showModalDialog(html, 'Seleziona il Documento da condividere con i relatori');
     };
+    //Metodo che ritorna il nome del Doc impostato
     Document.getDocName = function () {
         var docId = PropertiesService.getUserProperties().getProperty("docId");
         if (docId != null) {
@@ -29,6 +31,7 @@ var Document = /** @class */ (function () {
             return ("Non presente");
         }
     };
+    //Metodo per settare il Google Doc
     Document.setDocId = function (id) {
         PropertiesService.getUserProperties().setProperty("docId", id);
         Setting.showSettingFile();
