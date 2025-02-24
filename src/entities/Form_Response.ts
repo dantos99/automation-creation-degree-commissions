@@ -67,7 +67,7 @@ class Form_Response {
             if (indexColumnEndTime === -1) {
                 throw new Error("Colonna 'Disponibile fino alle ore' non trovata.");
             }
-
+            
             //Seleziono tutti i docenti che hanno dato disbonibilità
             value.forEach(function (row) {
                 if ((row[indexColumnAvailable]) != "Non Disponibile") {

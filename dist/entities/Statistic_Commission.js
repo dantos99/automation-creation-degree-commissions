@@ -1,38 +1,37 @@
 //Classe che rappresenta le statistiche dei docenti 
-var Statistic_Commission = /** @class */ (function () {
-    function Statistic_Commission(name, averagePresence) {
+class Statistic_Commission {
+    constructor(name, averagePresence) {
         this.name = name;
         this.averagePresence = averagePresence;
     }
     //Metodo per recuperare le statistiche
-    Statistic_Commission.getTeachersStatistics = function () {
+    static getTeachersStatistics() {
         //Foglio di statistiche
-        var file = DriveApp.getFileById(PropertiesService.getUserProperties().getProperty("sheetId"));
+        const file = DriveApp.getFileById(PropertiesService.getUserProperties().getProperty("sheetId"));
         //Controllo l'esistenza del file 
         if (!file) {
             SpreadsheetApp.getUi().alert("Sheet contenente le statistiche non trovato");
         }
         else {
             //Apro il foglio di statistiche
-            var sheet = SpreadsheetApp.openById(PropertiesService.getUserProperties().getProperty("sheetId"));
+            let sheet = SpreadsheetApp.openById(PropertiesService.getUserProperties().getProperty("sheetId"));
             //Recupero i valori
-            var values = sheet.getDataRange().getValues();
+            let values = sheet.getDataRange().getValues();
             //Intestazioni delle colonne
-            var headers = values[0];
+            let headers = values[0];
             //Cerco gli indici delle colonne che mi interessano
-            var columnAverage = "Media presenze";
-            var columnName = "Nome";
-            var indexColumnAverage_1 = headers.indexOf(columnAverage);
-            var indexColumnName_1 = headers.indexOf(columnName);
+            let columnAverage = "Media presenze";
+            let columnName = "Nome";
+            const indexColumnAverage = headers.indexOf(columnAverage);
+            const indexColumnName = headers.indexOf(columnName);
             //Ritorno un array con le statistiche dei docenti
-            var teachersStatistics_1 = [];
-            values.forEach(function (row) {
-                if (row[indexColumnName_1] != "Nome") {
-                    teachersStatistics_1.push(new Statistic_Commission(row[indexColumnName_1], row[indexColumnAverage_1]));
+            let teachersStatistics = [];
+            values.forEach((row) => {
+                if (row[indexColumnName] != "Nome") {
+                    teachersStatistics.push(new Statistic_Commission(row[indexColumnName], row[indexColumnAverage]));
                 }
             });
-            return teachersStatistics_1;
+            return teachersStatistics;
         }
-    };
-    return Statistic_Commission;
-}());
+    }
+}

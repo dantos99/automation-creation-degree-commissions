@@ -1,56 +1,56 @@
 //Nome dello sheet contenente i laureandi
-var sheetMainName = "Elenco Laureandi";
+const sheetMainName = "Elenco Laureandi";
 //Classe che rappresenta un laureando
-var Graduate = /** @class */ (function () {
-    function Graduate(email_supervisor, corso) {
+class Graduate {
+    constructor(email_supervisor, corso) {
         this.corso = corso;
         this.email_supervisor = email_supervisor;
     }
     //Funzione che restituisce le email dei relatori
-    Graduate.getAllEmailSupervisorOfGraduate = function () {
+    static getAllEmailSupervisorOfGraduate() {
         //Foglio Lauree
-        var sheetMain = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetMainName);
+        let sheetMain = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetMainName);
         //Controlle l'esistenza dello sheet
         if (!sheetMain) {
             SpreadsheetApp.getUi().alert("Sheet " + sheetMainName + " non presente");
         }
         else {
             //Creo un array con il contenuto della prima riga
-            var valuesSheetMain = sheetMain.getDataRange().getValues();
-            var headers = valuesSheetMain[0];
-            var columnEmail_1 = "EMAIL_REL";
+            let valuesSheetMain = sheetMain.getDataRange().getValues();
+            let headers = valuesSheetMain[0];
+            const columnEmail = "EMAIL_REL";
             //Cerco l'indice della colonna contenente le email dei relatori
-            var indexColumnEmail_1 = headers.indexOf(columnEmail_1);
-            if (indexColumnEmail_1 === -1) {
-                throw new Error("Colonna '" + columnEmail_1 + "' non trovata.");
+            const indexColumnEmail = headers.indexOf(columnEmail);
+            if (indexColumnEmail === -1) {
+                throw new Error("Colonna '" + columnEmail + "' non trovata.");
             }
             //Creo un array con le informazioni per ogni laureando
-            var teachers_1 = [];
+            let teachers = [];
             valuesSheetMain.forEach(function (row) {
-                if (row[indexColumnEmail_1] != columnEmail_1) {
-                    teachers_1.push(row[indexColumnEmail_1]);
+                if (row[indexColumnEmail] != columnEmail) {
+                    teachers.push(row[indexColumnEmail]);
                 }
             });
-            teachers_1 = Array.from(new Set(teachers_1));
-            return teachers_1;
+            teachers = Array.from(new Set(teachers));
+            return teachers;
         }
-    };
+    }
     //Metodo per recuperare tutti i corsi di studio presenti
-    Graduate.getCds = function () {
+    static getCds() {
         //Recupero lo sheet 
-        var sheetMain = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetMainName);
+        let sheetMain = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetMainName);
         //Creo un array con il contenuto della prima riga
-        var valuesSheet = sheetMain.getDataRange().getValues();
-        var headers = valuesSheet[0];
+        let valuesSheet = sheetMain.getDataRange().getValues();
+        const headers = valuesSheet[0];
         //Nome della colonna di interesse
-        var columnCDS = "CORSO";
+        const columnCDS = "CORSO";
         //Cerco l'indice della colonna contenente i corsi di studio
-        var indexcolumnCDS = headers.indexOf(columnCDS);
+        const indexcolumnCDS = headers.indexOf(columnCDS);
         if (indexcolumnCDS === -1) {
             throw new Error("Colonna '" + columnCDS + "' non trovata.");
         }
         //Creo un array con i corsi di studio
-        var cds = [];
+        let cds = [];
         valuesSheet.forEach(function (row) {
             if (row[indexcolumnCDS] != columnCDS) {
                 cds.push(row[indexcolumnCDS]);
@@ -59,6 +59,5 @@ var Graduate = /** @class */ (function () {
         //Elimino i duplicati
         cds = Array.from(new Set(cds));
         return cds;
-    };
-    return Graduate;
-}());
+    }
+}
