@@ -3,7 +3,8 @@ function onOpen() {
 }
 
 function main() {
-    Commission_Manager.start();
+    let commissionManager = new Commission_Manager();
+    commissionManager.start();
 }
 
 

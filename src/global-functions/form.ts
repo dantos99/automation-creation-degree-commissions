@@ -1,9 +1,11 @@
+let form = new Form();
+
 function getFormName() {
-    return Form.getFormName();
+    return form.getName();
 }
 function changeForm() {
-    Form.showPickerForm();
+    form.showPicker();
 }
 function setFormId(id: string) {
-    Form.setFormId(id);
+    form.setId(id);
 }

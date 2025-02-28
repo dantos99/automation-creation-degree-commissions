@@ -1,16 +1,16 @@
-//Nome dello sheet dal quale recuperare le risposte
-const sheetFormName = "Risposte al Form";
 
 //Classe che rappresenta le risposte al form
 class Form_Response {
-    email: string;
-    name: string;
-    surname: string;
-    available: string;
-    start_time: string;
-    end_time: string;
+    private email: string;
+    private name: string;
+    private surname: string;
+    private available: string;
+    private start_time: string;
+    private end_time: string;
+    private sheetFormName = "Risposte al Form"; //Nome dello sheet dal quale recuperare le risposte
 
-    constructor(email: string, name: string, surname: string, available: string, start_time: string, end_time: string) {
+    constructor(email?: string, name?: string, surname?: string, available?: string, start_time?: string, end_time?: string) {
+
         this.email = email;
         this.name = name;
         this.surname = surname;
@@ -19,12 +19,39 @@ class Form_Response {
         this.end_time = end_time;
     }
 
+    public getSheetName(): string {
+        return this.sheetFormName;
+    }
+
+    public getEmail(): string {
+        return this.email;
+    }
+
+    public getName(): string {
+        return this.name;
+    }
+
+    public getSurname(): string {
+        return this.surname;
+    }
+
+    public getAvailable(): string {
+        return this.available;
+    }
+    public getStartTime(): string {
+
+        return this.start_time
+    }
+    public getEndTime(): string {
+        return this.end_time;
+    }
+    
     //Metodo per recuperare le risposte del form
-    public static getFormResponses(): Array<Form_Response> {
+    public getFormResponses(): Array<Form_Response> {
 
         //Foglio che contiene le risposte
-        let sheetResponse = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetFormName);
-        
+        let sheetResponse = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(this.getSheetName());
+
         //Controllo l'esistenza dello sheet
         if (!sheetResponse) {
             SpreadsheetApp.getUi().alert("Sheet contenente le risposte del form non trovato");
@@ -80,5 +107,13 @@ class Form_Response {
             });
             return responses;
         }
+    }
+
+    public static getHeaders() {
+        return [["Email", "Nome", "Cognome", "Tipo di Disponibilità", "Ora inizio", "Ora fine"]];
+    }
+
+    public serialize() {
+        return [this.email, this.name, this.available, this.start_time, this.end_time];
     }
 }

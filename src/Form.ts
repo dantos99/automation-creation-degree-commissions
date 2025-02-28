@@ -2,7 +2,7 @@
 class Form {
 
     //Funzione che invia Form per la disponibilità ai docenti dei cds
-    public static shareFormAvailability(Id: string) {
+    public shareFormAvailability(Id: string) {
 
         //id del Form da inviare
         const formId: string = Id;
@@ -28,15 +28,16 @@ class Form {
             SpreadsheetApp.getUi().alert("Lo sheet per le risposte non è stato collegato correttamente");
 
         } else {
+            let formResponse: Form_Response = new Form_Response();
 
-            responseSheet.setName(sheetFormName);
+            responseSheet.setName(formResponse.getSheetName());
             //Imposto l'email da iviare
             let object: string = "Form Disponibilità";
             let messageText: string = formUrl; //Da aggiungere frasi cordiali (es. Buongiorno..ecc)
 
-
+            let teacher = new Teacher();
             //Recupero le email dei docenti che insegnano nei cds dei laureandi
-            var emailTeachers = Teacher.getEmailCdsTeachers(Graduate.getCds());
+            var emailTeachers = teacher.getEmailCdsTeachers(Graduate.getCds());
 
             let i: number = 0;
             //Invio il form ai docenti dei cds
@@ -65,14 +66,14 @@ class Form {
     }
 
     //Mostra i form presenti in drive
-    public static showPickerForm() {
+    public showPicker() {
 
         let html = HtmlService.createHtmlOutputFromFile('html/forms').setWidth(900).setHeight(500).setSandboxMode(HtmlService.SandboxMode.IFRAME);
         SpreadsheetApp.getUi().showModalDialog(html, 'Seleziona il Form per la richiesta di disponibilità');
     }
 
     //Metodo che ritorna il Form impostato
-    public static getFormName(): string {
+    public getName(): string {
 
         var formId = PropertiesService.getUserProperties().getProperty("formId");
         if (formId != null) {
@@ -84,9 +85,10 @@ class Form {
     }
 
     //Metodo per settare il Form
-    public static setFormId(id: string) {
+    public setId(id: string) {
+        let setting = new Setting();
         PropertiesService.getUserProperties().setProperty("formId", id);
-        Setting.showSettingFile();
+        setting.showSettingFile();
     }
 }
 

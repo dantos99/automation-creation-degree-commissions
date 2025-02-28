@@ -1,13 +1,15 @@
+let sheet: Sheet = new Sheet();
+
 function getSheetName() {
-    return Sheet.getSheetName();
+    return sheet.getName();
 }
 
-//Cambia lo sheet
+//Cambia lo Sheet
 function changeSheet() {
-    Sheet.showPickerSheet();
+    sheet.showPicker();
 }
 
 //Imposta lo sheet
 function setSheetId(id: string) {
-    Sheet.setSheetId(id);
+    sheet.setId(id);
 }

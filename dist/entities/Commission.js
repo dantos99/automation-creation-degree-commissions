@@ -1,23 +1,25 @@
-//Nome dello sheet che verrà creato contenente la prosposta di commissione
-var sheetCommissionName = "Proposta di commissione";
-//Classe che rappresenta la commissione proposte
-var Commission = /** @class */ (function () {
-    function Commission() {
+//Classe che rappresenta la commissione proposta
+class Commission {
+    constructor() {
+        //Nome dello sheet che verrà creato contenente la prosposta di commissione
+        this.sheetCommissionName = "Proposta di commissione";
+    }
+    //Funzione che ritorna il nome dello sheet impostato
+    getSheetName() {
+        return this.sheetCommissionName;
     }
     //Metodo per creare una nuova proposta di commissione
-    Commission.new = function (teachers) {
+    new(teachers) {
         //Recupera lo spreadsheet attivo
-        var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+        let spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
         //Crea un nuovo sheet 
-        var sheet = spreadsheet.insertSheet(sheetCommissionName);
+        let sheet = spreadsheet.insertSheet(this.getSheetName());
         //Trasforma l'array in bidimensionale per poter essere scritto sullo sheet
-        var keys = Object.keys(teachers[0]);
-        var teachersToStamp = teachers.map(function (obj) { return keys.map(function (key) { return obj[key]; }); });
+        let teachersToStamp = teachers.map(obj => obj.serialize());
         //Intestazioni per ogni colonna
-        var headers = [["Email", "Nome", "Cognome", "Tipo di Disponibilità", "Ora inizio", "Ora fine"]];
+        let headers = Form_Response.getHeaders();
         //Stampa i valori sullo sheet
         sheet.getRange(1, 1, 1, headers[0].length).setValues(headers).setFontWeight("bold");
         sheet.getRange(2, 1, teachersToStamp.length, headers[0].length).setValues(teachersToStamp);
-    };
-    return Commission;
-}());
+    }
+}
