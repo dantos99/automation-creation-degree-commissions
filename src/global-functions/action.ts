@@ -1,9 +1,9 @@
 function createCommission() {
-    Commission_Manager.createCommission();
+    new Commission_Manager().createCommission();
 }
 
 function shareFile() {
-    Commission_Manager.shareFile();
+    new Commission_Manager().shareFile();
 }
 
 function getOAuthToken() {

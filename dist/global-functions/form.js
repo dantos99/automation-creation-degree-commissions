@@ -1,9 +1,9 @@
 function getFormName() {
-    return Form.getFormName();
+    return new Form().getName();
 }
 function changeForm() {
-    Form.showPickerForm();
+    new Form().showPicker();
 }
 function setFormId(id) {
-    Form.setFormId(id);
+    new Form().setId(id);
 }

@@ -1,24 +1,29 @@
-//Nome dello sheet che verrà creato contenente la prosposta di commissione
-const sheetCommissionName = "Proposta di commissione";
 
- //Classe che rappresenta la commissione proposte
+//Classe che rappresenta la commissione proposta
 class Commission {
 
+    //Nome dello sheet che verrà creato contenente la prosposta di commissione
+    private sheetCommissionName = "Proposta di commissione";
+
+    //Funzione che ritorna il nome dello sheet impostato
+    public getSheetName(): string {
+
+        return this.sheetCommissionName;
+    }
     //Metodo per creare una nuova proposta di commissione
-    public static new(teachers: Array<Form_Response>) {
+    public new(teachers: Array<Form_Response>) {
 
         //Recupera lo spreadsheet attivo
         let spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
 
         //Crea un nuovo sheet 
-        let sheet = spreadsheet.insertSheet(sheetCommissionName);
+        let sheet = spreadsheet.insertSheet(this.getSheetName());
 
         //Trasforma l'array in bidimensionale per poter essere scritto sullo sheet
-        let keys = Object.keys(teachers[0]);
-        let teachersToStamp = teachers.map(obj => keys.map(key => (obj as { [key: string]: any })[key]));
+        let teachersToStamp = teachers.map(obj => obj.serialize());
 
         //Intestazioni per ogni colonna
-        let headers = [["Email", "Nome", "Cognome", "Tipo di Disponibilità", "Ora inizio", "Ora fine"]];
+        let headers = Form_Response.getHeaders();
 
         //Stampa i valori sullo sheet
         sheet.getRange(1, 1, 1, headers[0].length).setValues(headers).setFontWeight("bold");

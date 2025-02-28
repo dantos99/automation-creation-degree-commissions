@@ -1,7 +1,7 @@
 //Classe per gestire i file di tipo Google Form
 class Form {
     //Funzione che invia Form per la disponibilità ai docenti dei cds
-    static shareFormAvailability(Id) {
+    shareFormAvailability(Id) {
         //id del Form da inviare
         const formId = Id;
         //Recupero il link pubblico per la condivisione del Form
@@ -19,12 +19,15 @@ class Form {
             SpreadsheetApp.getUi().alert("Lo sheet per le risposte non è stato collegato correttamente");
         }
         else {
-            responseSheet.setName(sheetFormName);
+            let formResponse = new Form_Response();
+            responseSheet.setName(formResponse.getSheetName());
             //Imposto l'email da iviare
             let object = "Form Disponibilità";
             let messageText = formUrl; //Da aggiungere frasi cordiali (es. Buongiorno..ecc)
+            let teacher = new Teacher();
+            let graduate = new Graduate();
             //Recupero le email dei docenti che insegnano nei cds dei laureandi
-            var emailTeachers = Teacher.getEmailCdsTeachers(Graduate.getCds());
+            var emailTeachers = teacher.getEmailCdsTeachers(graduate.getCds());
             let i = 0;
             //Invio il form ai docenti dei cds
             for (i = 0; i < emailTeachers.length; i++) {
@@ -47,12 +50,12 @@ class Form {
         ScriptApp.newTrigger("createCommission").timeBased().at(date).create();
     }
     //Mostra i form presenti in drive
-    static showPickerForm() {
+    showPicker() {
         let html = HtmlService.createHtmlOutputFromFile('html/forms').setWidth(900).setHeight(500).setSandboxMode(HtmlService.SandboxMode.IFRAME);
         SpreadsheetApp.getUi().showModalDialog(html, 'Seleziona il Form per la richiesta di disponibilità');
     }
     //Metodo che ritorna il Form impostato
-    static getFormName() {
+    getName() {
         var formId = PropertiesService.getUserProperties().getProperty("formId");
         if (formId != null) {
             return DriveApp.getFileById(formId).getName();
@@ -62,8 +65,9 @@ class Form {
         }
     }
     //Metodo per settare il Form
-    static setFormId(id) {
+    setId(id) {
+        let setting = new Setting();
         PropertiesService.getUserProperties().setProperty("formId", id);
-        Setting.showSettingFile();
+        setting.showSettingFile();
     }
 }

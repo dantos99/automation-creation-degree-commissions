@@ -1,18 +1,27 @@
-//Nome dello sheet contenente i laureandi
-const sheetMainName = "Elenco Laureandi";
 //Classe che rappresenta un laureando
 class Graduate {
     constructor(email_supervisor, corso) {
+        this.sheetMainName = "Elenco Laureandi"; //Nome dello sheet contenente i laureandi
         this.corso = corso;
         this.email_supervisor = email_supervisor;
     }
+    getEmailSupervisor() {
+        return this.email_supervisor;
+    }
+    getCorso() {
+        return this.corso;
+    }
+    //Funzione che ritorna il nome dello sheet impostato
+    getSheetName() {
+        return this.sheetMainName;
+    }
     //Funzione che restituisce le email dei relatori
-    static getAllEmailSupervisorOfGraduate() {
+    getAllEmailSupervisorOfGraduate() {
         //Foglio Lauree
-        let sheetMain = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetMainName);
+        let sheetMain = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(this.getSheetName());
         //Controlle l'esistenza dello sheet
         if (!sheetMain) {
-            SpreadsheetApp.getUi().alert("Sheet " + sheetMainName + " non presente");
+            SpreadsheetApp.getUi().alert("Sheet " + this.getSheetName() + " non presente");
         }
         else {
             //Creo un array con il contenuto della prima riga
@@ -36,9 +45,9 @@ class Graduate {
         }
     }
     //Metodo per recuperare tutti i corsi di studio presenti
-    static getCds() {
+    getCds() {
         //Recupero lo sheet 
-        let sheetMain = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetMainName);
+        let sheetMain = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(this.getSheetName());
         //Creo un array con il contenuto della prima riga
         let valuesSheet = sheetMain.getDataRange().getValues();
         const headers = valuesSheet[0];

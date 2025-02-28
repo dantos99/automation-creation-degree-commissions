@@ -2,36 +2,47 @@
 class Commission_Manager {
 
     //Metodo per avviare il processo
-    public static start() {
-        Setting.showSettingFile();
+    public start() {
+        let setting: Setting = new Setting();
+        setting.showSettingFile();
     }
 
     //Metodo di condivisione dei file
-    public static shareFile() {
+    public shareFile() {
         //Recupero gli id dei file da condividere dalle UserProperty
         let properties = PropertiesService.getUserProperties();
         const docId = properties.getProperty('docId');
         const formId = properties.getProperty('formId');
         const sheetId = properties.getProperty('sheetId');
 
+        let setting = new Setting();
+
         //Controllo che l'utente abbia inserito tutti i file richiesti
         if (docId == null || formId == null || sheetId == null) {
             SpreadsheetApp.getUi().alert("Attenzione!! Inserire i file mancanti per andate avanti");
-            Setting.showSettingFile();
+            setting.showSettingFile();
         } else {
 
+            let doc = new Doc();
+            let form = new Form();
+            
             //Condivido i file 
-            Document.shareDocToSupervisor(docId);
-            Form.shareFormAvailability(formId);
+            doc.shareDocToSupervisor(docId);
+            form.shareFormAvailability(formId);
         }
     }
 
     //Metodo per creare una proposta di commissione
-    public static createCommission() {
-        let responseForm = Form_Response.getFormResponses();
-        let teacherAvailable = Sheet.compareResponseFormWithStatistics(responseForm);
-        Commission.new(teacherAvailable);
-    
+    public createCommission() {
+        let form_response = new Form_Response();
+        let responseForm = form_response.getFormResponses();
+        
+        let sheet = new Sheet();
+        let teacherAvailable = sheet.compareResponseFormWithStatistics(responseForm);
+        
+        let commission = new Commission();
+        commission.new(teacherAvailable);
+
     }
 }
 

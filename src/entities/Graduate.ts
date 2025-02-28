@@ -1,27 +1,38 @@
-//Nome dello sheet contenente i laureandi
-const sheetMainName = "Elenco Laureandi";
 
 //Classe che rappresenta un laureando
 class Graduate {
 
-    email_supervisor: string;
-    corso: string;
+    private email_supervisor: string;
+    private corso: string;
+    private sheetMainName = "Elenco Laureandi"; //Nome dello sheet contenente i laureandi
 
-    constructor(email_supervisor: string, corso: string) {
+    constructor(email_supervisor?: string, corso?: string) {
+
 
         this.corso = corso;
         this.email_supervisor = email_supervisor;
     }
 
+    public getEmailSupervisor():string {
+        return this.email_supervisor;
+    }
+    public getCorso():string {
+        return this.corso;
+    }
+    //Funzione che ritorna il nome dello sheet impostato
+    public getSheetName(): string {
+
+        return this.sheetMainName;
+    }
     //Funzione che restituisce le email dei relatori
-    public static getAllEmailSupervisorOfGraduate(): Array<string> {
+    public getAllEmailSupervisorOfGraduate(): Array<string> {
 
         //Foglio Lauree
-        let sheetMain = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetMainName);
+        let sheetMain = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(this.getSheetName());
 
         //Controlle l'esistenza dello sheet
         if (!sheetMain) {
-            SpreadsheetApp.getUi().alert("Sheet " + sheetMainName + " non presente");
+            SpreadsheetApp.getUi().alert("Sheet " + this.getSheetName() + " non presente");
         } else {
 
             //Creo un array con il contenuto della prima riga
@@ -51,10 +62,10 @@ class Graduate {
     }
 
     //Metodo per recuperare tutti i corsi di studio presenti
-    public static getCds(): Array<string> {
+    public getCds(): Array<string> {
 
         //Recupero lo sheet 
-        let sheetMain = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetMainName);
+        let sheetMain = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(this.getSheetName());
 
         //Creo un array con il contenuto della prima riga
         let valuesSheet: Array<Array<string>> = sheetMain.getDataRange().getValues();
@@ -77,7 +88,7 @@ class Graduate {
                 cds.push(row[indexcolumnCDS]);
             }
         });
-        
+
         //Elimino i duplicati
         cds = Array.from(new Set(cds));
         return cds;

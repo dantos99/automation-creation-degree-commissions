@@ -1,8 +1,7 @@
-//Nome dello sheet dal quale recuperare le risposte
-const sheetFormName = "Risposte al Form";
 //Classe che rappresenta le risposte al form
 class Form_Response {
     constructor(email, name, surname, available, start_time, end_time) {
+        this.sheetFormName = "Risposte al Form"; //Nome dello sheet dal quale recuperare le risposte
         this.email = email;
         this.name = name;
         this.surname = surname;
@@ -10,18 +9,40 @@ class Form_Response {
         this.start_time = start_time;
         this.end_time = end_time;
     }
+    getSheetName() {
+        return this.sheetFormName;
+    }
+    getEmail() {
+        return this.email;
+    }
+    getName() {
+        return this.name;
+    }
+    getSurname() {
+        return this.surname;
+    }
+    getAvailable() {
+        return this.available;
+    }
+    getStartTime() {
+        return this.start_time;
+    }
+    getEndTime() {
+        return this.end_time;
+    }
     //Metodo per recuperare le risposte del form
-    static getFormResponses() {
+    getFormResponses() {
         //Foglio che contiene le risposte
-        let sheetResponse = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetFormName);
+        let sheetResponse = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(this.getSheetName());
         //Controllo l'esistenza dello sheet
         if (!sheetResponse) {
             SpreadsheetApp.getUi().alert("Sheet contenente le risposte del form non trovato");
         }
         else {
             //Valori inseriti nelle risposte
-            let value = sheetResponse.getDataRange().getValues();
-            let headers = value[0];
+            let values = sheetResponse.getDataRange().getValues();
+            let headers = values[0];
+            values.slice(0, 1);
             //Array che conterrà le risposte
             let responses = [];
             //Trovo gli indici di tutti i campi che mi interessano
@@ -50,7 +71,7 @@ class Form_Response {
                 throw new Error("Colonna 'Disponibile fino alle ore' non trovata.");
             }
             //Seleziono tutti i docenti che hanno dato disbonibilità
-            value.forEach(function (row) {
+            values.forEach(function (row) {
                 if ((row[indexColumnAvailable]) != "Non Disponibile") {
                     if ((row[indexColumnAvailable]) == "Disponibile, ma solo in alcune fasce orarie") {
                         responses.push(new Form_Response(row[indexColumnEmail], row[indexColumnName], row[indexColumnSurname], row[indexColumnAvailable], Utilities.formatDate(row[indexColumnStartTime], Session.getScriptTimeZone(), "HH:mm"), Utilities.formatDate(row[indexColumnEndTime], Session.getScriptTimeZone(), "HH:mm")));
@@ -62,5 +83,11 @@ class Form_Response {
             });
             return responses;
         }
+    }
+    static getHeaders() {
+        return [["Email", "Nome", "Cognome", "Tipo di Disponibilità", "Ora inizio", "Ora fine"]];
+    }
+    serialize() {
+        return [this.email, this.name, this.available, this.start_time, this.end_time];
     }
 }

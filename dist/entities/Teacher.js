@@ -1,19 +1,34 @@
-//Nome dello sheet contenente l'elenco docenti
-const sheetTeachersName = "Elenco Docenti";
 //Classe per rappresentare i docenti
 class Teacher {
     constructor(name, surname, email, cds) {
+        this.sheetTeachersName = "Elenco Docenti"; //Nome dello sheet contenente l'elenco docenti
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.cds = cds;
     }
+    getName() {
+        return this.name;
+    }
+    getSurname() {
+        return this.surname;
+    }
+    getEmail() {
+        return this.email;
+    }
+    getCds() {
+        return this.cds;
+    }
+    //Funzione che ritorna il nome dello sheet impostato
+    getSheetName() {
+        return this.sheetTeachersName;
+    }
     //Funzione che restituisce le email dei prof dei tre cds
-    static getEmailCdsTeachers(cds) {
+    getEmailCdsTeachers(cds) {
         //Foglio Elenco Docenti
-        let sheetTeachers = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(sheetTeachersName);
+        let sheetTeachers = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(this.getSheetName());
         if (!sheetTeachers) {
-            SpreadsheetApp.getUi().alert("Sheet " + sheetTeachersName + " non presente");
+            SpreadsheetApp.getUi().alert("Sheet " + this.getSheetName() + " non presente");
         }
         else {
             let valuesSheetTeachers = sheetTeachers.getDataRange().getValues();
@@ -33,7 +48,7 @@ class Teacher {
             //Riempio l'array con le email dei docenti che appartengono ai cds di interesse
             valuesSheetTeachers.forEach(function (row) {
                 if (cds.includes(row[indexcolumnCDS])) {
-                    emails.push(row[indexEmailTeachers], row[indexcolumnCDS]);
+                    emails.push(row[indexEmailTeachers]);
                 }
             });
             emails = Array.from(new Set(emails));

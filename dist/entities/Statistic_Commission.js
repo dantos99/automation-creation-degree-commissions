@@ -4,8 +4,14 @@ class Statistic_Commission {
         this.name = name;
         this.averagePresence = averagePresence;
     }
+    getName() {
+        return this.name;
+    }
+    getAveragePresence() {
+        return this.averagePresence;
+    }
     //Metodo per recuperare le statistiche
-    static getTeachersStatistics() {
+    getTeachersStatistics() {
         //Foglio di statistiche
         const file = DriveApp.getFileById(PropertiesService.getUserProperties().getProperty("sheetId"));
         //Controllo l'esistenza del file 
