@@ -35,7 +35,7 @@ class Teacher {
         return this.sheetTeachersName;
     }
 
-    //Funzione che restituisce le email dei prof dei tre cds
+    //Funzione che restituisce le email dei prof dei cds presenti
     public getEmailCdsTeachers(cds: Array<string>): Array<string> {
 
         //Foglio Elenco Docenti

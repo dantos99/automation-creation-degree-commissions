@@ -6,7 +6,7 @@ class Commission_Manager {
         setting.showSettingFile();
     }
     //Metodo di condivisione dei file
-    shareFile() {
+    shareFiles() {
         //Recupero gli id dei file da condividere dalle UserProperty
         let properties = PropertiesService.getUserProperties();
         const docId = properties.getProperty('docId');
@@ -22,8 +22,8 @@ class Commission_Manager {
             let doc = new Doc();
             let form = new Form();
             //Condivido i file 
-            doc.shareDocToSupervisor(docId);
             form.shareFormAvailability(formId);
+            doc.shareDocToSupervisor(docId);
         }
     }
     //Metodo per creare una proposta di commissione

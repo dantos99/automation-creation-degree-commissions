@@ -42,8 +42,8 @@ class Statistic_Commission {
             let headers: Array<string> = values[0];
 
             //Cerco gli indici delle colonne che mi interessano
-            let columnAverage: string = "Media presenze";
-            let columnName: string = "Nome";
+            let columnAverage: string = "Media Presenze";
+            let columnName: string = "NOME";
             const indexColumnAverage: number = headers.indexOf(columnAverage);
             const indexColumnName: number = headers.indexOf(columnName);
 

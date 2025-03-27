@@ -72,7 +72,7 @@ class Form_Response {
             }
             //Seleziono tutti i docenti che hanno dato disbonibilità
             values.forEach(function (row) {
-                if ((row[indexColumnAvailable]) != "Non Disponibile") {
+                if ((row[indexColumnAvailable]) != "Non disponibile") {
                     if ((row[indexColumnAvailable]) == "Disponibile, ma solo in alcune fasce orarie") {
                         responses.push(new Form_Response(row[indexColumnEmail], row[indexColumnName], row[indexColumnSurname], row[indexColumnAvailable], Utilities.formatDate(row[indexColumnStartTime], Session.getScriptTimeZone(), "HH:mm"), Utilities.formatDate(row[indexColumnEndTime], Session.getScriptTimeZone(), "HH:mm")));
                     }
@@ -88,6 +88,6 @@ class Form_Response {
         return [["Email", "Nome", "Cognome", "Tipo di Disponibilità", "Ora inizio", "Ora fine"]];
     }
     serialize() {
-        return [this.email, this.name, this.available, this.start_time, this.end_time];
+        return [this.email, this.name, this.surname, this.available, this.start_time, this.end_time];
     }
 }

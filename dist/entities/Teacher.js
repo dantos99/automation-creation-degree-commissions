@@ -23,7 +23,7 @@ class Teacher {
     getSheetName() {
         return this.sheetTeachersName;
     }
-    //Funzione che restituisce le email dei prof dei tre cds
+    //Funzione che restituisce le email dei prof dei cds presenti
     getEmailCdsTeachers(cds) {
         //Foglio Elenco Docenti
         let sheetTeachers = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(this.getSheetName());

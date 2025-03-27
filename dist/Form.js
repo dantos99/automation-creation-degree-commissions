@@ -33,11 +33,11 @@ class Form {
             for (i = 0; i < emailTeachers.length; i++) {
                 MailApp.sendEmail(emailTeachers[i], object, messageText);
             }
-            Form.createTrigger();
+            this.createTrigger();
         }
     }
     //Metodo che crea un trigger che esegue la funzione createCommission dopo tre giorni lavorativi
-    static createTrigger() {
+    createTrigger() {
         let date = new Date();
         let dayAdded = 0;
         while (dayAdded < 3) {

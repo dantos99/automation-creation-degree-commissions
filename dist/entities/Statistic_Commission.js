@@ -26,8 +26,8 @@ class Statistic_Commission {
             //Intestazioni delle colonne
             let headers = values[0];
             //Cerco gli indici delle colonne che mi interessano
-            let columnAverage = "Media presenze";
-            let columnName = "Nome";
+            let columnAverage = "Media Presenze";
+            let columnName = "NOME";
             const indexColumnAverage = headers.indexOf(columnAverage);
             const indexColumnName = headers.indexOf(columnName);
             //Ritorno un array con le statistiche dei docenti

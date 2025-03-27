@@ -8,7 +8,7 @@ class Commission_Manager {
     }
 
     //Metodo di condivisione dei file
-    public shareFile() {
+    public shareFiles() {
         //Recupero gli id dei file da condividere dalle UserProperty
         let properties = PropertiesService.getUserProperties();
         const docId = properties.getProperty('docId');
@@ -27,18 +27,18 @@ class Commission_Manager {
             let form = new Form();
             
             //Condivido i file 
-            doc.shareDocToSupervisor(docId);
             form.shareFormAvailability(formId);
+            doc.shareDocToSupervisor(docId);
         }
     }
 
     //Metodo per creare una proposta di commissione
     public createCommission() {
         let form_response = new Form_Response();
-        let responseForm = form_response.getFormResponses();
+        let responseForm: Form_Response[] = form_response.getFormResponses();
         
         let sheet = new Sheet();
-        let teacherAvailable = sheet.compareResponseFormWithStatistics(responseForm);
+        let teacherAvailable: Form_Response[] = sheet.compareResponseFormWithStatistics(responseForm);
         
         let commission = new Commission();
         commission.new(teacherAvailable);
